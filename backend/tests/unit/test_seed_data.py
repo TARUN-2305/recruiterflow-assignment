@@ -8,6 +8,9 @@ from app.domain.matching import rank_candidates_for_job, round_half_up
 from scripts.seed import SEED_FILE, SeedData, load_seed
 from tests.helpers import seed_profiles
 
+# Written as chr() so no tool can turn it into an invisible literal in this file.
+ZERO_WIDTH_SPACE = chr(0x200B)
+
 
 @pytest.fixture(scope="module")
 def data() -> SeedData:
@@ -81,7 +84,7 @@ def test_derived_totals(data: SeedData) -> None:
 
 def test_seed_file_has_no_zero_width_spaces() -> None:
     # The PDF's text layer contains U+200B characters; they must not leak into seed data.
-    assert "​" not in SEED_FILE.read_text(encoding="utf-8")
+    assert ZERO_WIDTH_SPACE not in SEED_FILE.read_text(encoding="utf-8")
 
 
 def test_top_match_per_job_on_seed_data(data: SeedData) -> None:

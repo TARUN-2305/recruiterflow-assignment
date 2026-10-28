@@ -12,6 +12,9 @@ from scripts.load_sql_detective import SQL_DIR, answers, load_dataset, split_que
 
 SCHEMA = "sql_detective_test"
 
+# Written as chr() so no tool can turn it into an invisible literal in this file.
+ZERO_WIDTH_SPACE = chr(0x200B)
+
 
 @pytest.fixture(scope="module")
 def results(db_url: str) -> Iterator[dict[str, tuple[list[str], list[tuple[Any, ...]]]]]:
@@ -45,7 +48,7 @@ def test_supplied_schema_is_unchanged_and_clean() -> None:
     schema = (SQL_DIR / "schema.sql").read_text(encoding="utf-8")
     seed = (SQL_DIR / "seed.sql").read_text(encoding="utf-8")
     assert "REFERENCES" not in schema and "FOREIGN KEY" not in schema  # no keys were added
-    assert "​" not in schema + seed  # the PDF's zero-width spaces were not copied
+    assert ZERO_WIDTH_SPACE not in schema + seed  # the PDF's zero-width spaces were not copied
 
 
 def test_q1_open_postings_with_recruiter(results: Any) -> None:
