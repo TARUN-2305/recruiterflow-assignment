@@ -7,6 +7,8 @@ source-material/
 CLAUDE.md
 docs/handoff/interview-guide.md
 docs/handoff/qa-reflection-draft.md
+docs/learning/
+CLAUDE_RECRUITERFLOW_ZERO_TO_SOLID_PROMPT.md
 
 # --- Secrets / local config ---
 .env
