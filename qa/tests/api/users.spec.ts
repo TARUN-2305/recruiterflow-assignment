@@ -22,4 +22,10 @@ test.describe('ReqRes users API', () => {
     const body: unknown = await response.json();
     expect(body).toMatchObject({ name: 'morpheus' });
   });
+
+  test('GET /api/users/23 returns 404 for a user that does not exist', { tag: '@bonus' }, async ({ request }) => {
+    const response = await request.get('/api/users/23');
+
+    expect(response.status()).toBe(404);
+  });
 });
