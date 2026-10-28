@@ -41,6 +41,9 @@ htmlcov/
 *.sqlite
 *.sqlite3
 
+# --- Local AI-assistant tooling ---
+.claude/
+
 # --- OS / editors ---
 .DS_Store
 Thumbs.db
