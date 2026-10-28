@@ -121,7 +121,7 @@ Evaluation weights (p. 5), for prioritisation: coverage 30%, readability/naming 
 | C-MONEY-01 | 16 | Balance = paid − own shares; positive = gets back | MUST | `domain/balances.ts` | Unit | Done (`balances.ts`; golden sample balances) |
 | C-MONEY-02 | 16 | Payer need not be in split | MUST | `balances.ts` | Unit (sample e5) | Done (sample e5 test) |
 | C-MONEY-03 | 16 | Never lose/invent a paisa; ₹100 ÷ 3 = 33.34 + 33.33 + 33.33 | MUST | `domain/allocation.ts` | Unit (required case) | Done (₹100 ÷ 3 test; 2,000 generated allocations) |
-| C-MONEY-04 | 16 | One rule for the extra paisa, used everywhere, stated in README | MUST | `allocation.ts`, ADR-004, `frontend/README.md` | Unit + review | Done in code + ADR-004; README statement in M7 |
+| C-MONEY-04 | 16 | One rule for the extra paisa, used everywhere, stated in README | MUST | `allocation.ts`, ADR-004, `frontend/README.md` | Unit + review | Done (`allocation.ts`, ADR-004, stated in `frontend/README.md`) |
 | C-MONEY-05 | 16 | Balances sum to exactly ₹0 | MUST | `balances.ts` | Unit (sample + generated cases) | Done (sample + 500 generated trips sum to 0) |
 | C-MONEY-06 | 16 | Indian number format, e.g. ₹1,00,000.00 | MUST | `domain/format.ts` | Unit | Done (`formatINR`, cross-checked with Intl en-IN) |
 | C-MONEY-07 | 16 | Amounts stored as integer paise (₹1,250.50 = 125050) | MUST | `domain/types.ts`, `money.ts` | Unit | Done (types + strict parsers) |
@@ -134,7 +134,7 @@ Evaluation weights (p. 5), for prioritisation: coverage 30%, readability/naming 
 | C-TECH-02 | 18 | `"strict": true`; `npm run typecheck` zero errors | MUST | `frontend/tsconfig*.json` | Command output | Done (0 errors) |
 | C-TECH-03 | 18 | No `any`, `@ts-ignore`, `@ts-expect-error`; avoid `as` and `!` (comment if unavoidable) | MUST | All TS | ESLint rules + grep in acceptance | Done (ESLint bans them; 0 casts or `!` in src, `as const` only) |
 | C-TECH-04 | 18 | Redux Toolkit holds members and expenses; typed `useAppDispatch`/`useAppSelector` | MUST | `frontend/src/store/` | Review + tests | Done (`src/store/`: slices, typed hooks, memoised selectors) |
-| C-TECH-05 | 18 | Where localStorage is read/written is your call; **say why in README** | MUST | ADR-005, `frontend/README.md` | Review | Implemented (`src/services/persistence.ts`, ADR-005); README rationale in M7 |
+| C-TECH-05 | 18 | Where localStorage is read/written is your call; **say why in README** | MUST | ADR-005, `frontend/README.md` | Review | Done (`src/services/persistence.ts`; rationale in `frontend/README.md` and ADR-005) |
 | C-TECH-06 | 18 | Money parsing, splitting, balances, validation as plain TS functions testable without React | MUST | `frontend/src/domain/` | Unit tests import no React | Done (`src/domain/` has no React imports) |
 | C-TECH-07 | 18 | Vitest/Jest + RTL; at minimum split/balance logic incl. ₹100 ÷ 3, and form invalid-errors + valid-save | MUST | `frontend/src/**/*.test.ts(x)` | `npm test` | Done (132 tests: split/balance incl. ₹100 ÷ 3, invalid form errors, valid save) |
 | C-TECH-08 | 18 | ESLint with typescript-eslint; `npm run lint` passes | MUST | `frontend/eslint.config.js` | Command output | Done (0 problems) |
@@ -142,8 +142,8 @@ Evaluation weights (p. 5), for prioritisation: coverage 30%, readability/naming 
 | C-TECH-10 | 19 | Responsive to 360 px (table may scroll or become cards) | MUST | `frontend/src/styles/` | Manual at 360 px (browser pane) | Done (360 px checked; `docs/testing/evidence/frontend-manual-checks.md`) |
 | C-TECH-11 | 19 | Visible labels; errors next to fields; whole app works by keyboard | MUST | Components | RTL (label queries) + manual keyboard pass | Done (labels, aria-describedby errors, keyboard-only flow; `docs/testing/evidence/frontend-manual-checks.md`) |
 | C-TECH-12 | 19 | Scripts: `dev`, `build`, `typecheck`, `lint`, `test` | MUST | `frontend/package.json` | Run each | Done (dev, build, typecheck, lint, test) |
-| C-SUB-01 | 19 | Runnable with `npm install` + `npm run dev` | MUST | `frontend/` | Clean-clone run | Planned |
-| C-DOC-01 | 19 | README ≤ ~500 words: run + unfinished; 3 decisions + why; another-day improvements; AI use in 2–3 sentences | MUST | `frontend/README.md` | Word count + review | Planned |
+| C-SUB-01 | 19 | Runnable with `npm install` + `npm run dev` | MUST | `frontend/` | Clean-clone run | Done (clean clone: npm install + npm run dev served the app; all scripts pass) |
+| C-DOC-01 | 19 | README ≤ ~500 words: run + unfinished; 3 decisions + why; another-day improvements; AI use in 2–3 sentences | MUST | `frontend/README.md` | Word count + review | Done (499 words including commands; 4 topics + rounding rule) |
 | C-AI-01 | 19 | Candidate can explain every line; drives the live change without AI | USER (prep) | `docs/handoff/interview-guide.md` | — | Planned |
 | C-OOS-01 | 19 | Visual polish, animations, extra features: not evaluated | OOS | — | — | n/a |
 

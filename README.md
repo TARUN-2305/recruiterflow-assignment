@@ -6,12 +6,12 @@ One repository, one folder per assignment section. Each folder runs on its own a
 |---|---|---|---|
 | [`qa/`](qa/) | A — QA Automation | Playwright + TypeScript | Done: 5 required + 3 bonus tests and a Page Object, passing live |
 | [`backend/`](backend/) | B — Recruiter Bot + SQL Detective | Python · FastAPI · PostgreSQL · hand-written SQL | Done: both match endpoints, SQL Detective Q1–Q5, 63 tests |
-| [`frontend/`](frontend/) | C — Trip Splitter | React · Redux Toolkit · strict TypeScript · Vite | Not started |
+| [`frontend/`](frontend/) | C — Trip Splitter | React · Redux Toolkit · strict TypeScript · Vite | Done: both pages, all validation, localStorage, 132 tests |
 | [`docs/`](docs/) | Planning and design | Requirements traceability, architecture, ADRs, test strategy | Phase 0 complete |
 
 ## Prerequisites
 
-- Node.js 18+ (for `qa/` and `frontend/`)
+- Node.js 22.22+ (`frontend/` needs it for React Router 8; `qa/` needs 20+)
 - Python 3.12+ (for `backend/`)
 - Docker Desktop (optional; it runs PostgreSQL for `backend/`, or use a local PostgreSQL install instead)
 
@@ -48,4 +48,11 @@ python -m scripts.load_sql_detective                # SQL Detective answers
 pytest
 ```
 
-Quick-start commands for the frontend will be added when it is completed.
+**Trip Splitter (Section C)** — see [frontend/README.md](frontend/README.md) (needs Node.js 22.22+)
+
+```bash
+cd frontend
+npm install
+npm run dev        # http://localhost:5173
+npm test && npm run typecheck && npm run lint && npm run build
+```
