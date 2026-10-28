@@ -23,7 +23,7 @@ Both endpoints call the same function and the same sort comparator. A test asser
 | **Availability** | **10** | Immediate = 1, 2 weeks = 0.5, Not looking = 0 | Recruiting-practical. "Not looking" candidates are **penalised (−10), never filtered out**: a recruiter may still want to approach them. |
 
 **Relevance gate:** if a pair matches **zero** required skills, its score is **0**. Its reason says "No required skills matched (0/N)". The pair still appears in the response, ranked last.
-Why: without the gate, Ron S. (woodworking) would score 40/100 for Backend Detective on experience and availability alone, which is misleading. Experience only matters if it is experience in something the job needs.
+Why: without the gate, Rick S. (systems-design, rapid-prototyping, chemistry; 20 years; available immediately) would score 40/100 for Backend Detective on experience and availability alone, which is misleading. (Ron S., a woodworker, would score 30: he is "Not looking", so he gets no availability points.) Experience only matters if it is experience in something the job needs.
 
 ```
 if matched == 0:  score = 0
