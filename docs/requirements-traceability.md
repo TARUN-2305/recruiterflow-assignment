@@ -72,14 +72,14 @@ Evaluation weights (p. 5), for prioritisation: coverage 30%, readability/naming 
 | B-API-03 | — | 404 for unknown id; 422 for malformed id; no stack traces | OPT-ENG | `backend/app/api/errors.py` | Integration tests | Done (404/422/500 tests) |
 | B-ALG-01 | 11 | Algorithm **must** account for skill overlap with job's required skills | MUST | `backend/app/domain/matching.py` | Unit tests | Done (unit tests) |
 | B-ALG-02 | 11 | Algorithm **must** account for experience vs job minimum | MUST | `backend/app/domain/matching.py` | Unit tests (below/at/above min) | Done (unit tests: below/at/above/min 0) |
-| B-ALG-03 | 11 | Weights, traits, culture keywords, availability, tie-breaking: candidate's choice; must explain and defend | MUST (explain) | ADR-003, `backend/README.md` | Review | Implemented per ADR-003; README write-up pending (M4) |
+| B-ALG-03 | 11 | Weights, traits, culture keywords, availability, tie-breaking: candidate's choice; must explain and defend | MUST (explain) | ADR-003, `backend/README.md` | Review | Done (ADR-003; `backend/README.md` "How matching works") |
 | B-ALG-04 | — | Both directions use one scoring function; deterministic order | OPT-ENG | `matching.py` | Consistency test over all 90 pairs | Done (90-pair consistency test) |
-| B-DOC-01 | 11 | README with curl examples (or Postman) proving the API works | MUST | `backend/README.md` | Commands executed; output captured in `docs/testing/evidence/` | In progress (curl evidence captured; README in M4) |
-| B-DOC-02 | 13 | README: install and run locally | MUST | `backend/README.md` | Clean-setup run | Planned |
-| B-DOC-03 | 13 | README: few-paragraph decisions and trade-offs, especially matching | MUST | `backend/README.md` | Review | Planned |
-| B-DOC-04 | 13 | README: where AI tools were used | MUST | `backend/README.md` | Review | Planned |
+| B-DOC-01 | 11 | README with curl examples (or Postman) proving the API works | MUST | `backend/README.md` | Commands executed; output captured in `docs/testing/evidence/` | Done (`backend/README.md` curl section; `docs/testing/evidence/recruiter-bot-curl.txt`) |
+| B-DOC-02 | 13 | README: install and run locally | MUST | `backend/README.md` | Clean-setup run | Done (README steps verified from a clean clone on fresh databases, 2026-10-28) |
+| B-DOC-03 | 13 | README: few-paragraph decisions and trade-offs, especially matching | MUST | `backend/README.md` | Review | Done (`backend/README.md` rationale and trade-offs) |
+| B-DOC-04 | 13 | README: where AI tools were used | MUST | `backend/README.md` | Review | Done (`backend/README.md` AI use; candidate to confirm wording) |
 | B-BON-01 | 11 | Tests (nice bonus) | BONUS (our gate: required) | `backend/tests/` | `pytest` | Done (63 tests: 34 unit, 29 integration) |
-| B-BON-02 | 11 | API docs (nice bonus) | BONUS | FastAPI OpenAPI at `/docs` + `docs/architecture/api-contracts.md` | Manual check | In progress (FastAPI OpenAPI generated; manual check in M4) |
+| B-BON-02 | 11 | API docs (nice bonus) | BONUS | FastAPI OpenAPI at `/docs` + `docs/architecture/api-contracts.md` | Manual check | Done (OpenAPI 3.1 at `/openapi.json`, Swagger UI at `/docs`; `api-contracts.md`) |
 | B-OOS-01 | 11 | Frontend for the bot | OOS | — | — | n/a |
 | B-SQLD-01 | 11–13 | Load the 4 supplied tables **as-is** (no redesign), with supplied rows | MUST | `backend/sql_detective/schema.sql`, `backend/sql_detective/seed.sql` (verbatim) | Row-count test (5/7/11/24); diff vs source | Done (verbatim files checked against the PDF text; 5/7/11/24 rows; no keys added) |
 | B-SQLD-02 | 13 | Q1: open postings + owning recruiter name | MUST | `backend/sql_detective/sql_detective.sql` | Result test vs expected set | Done (`tests/integration/test_sql_detective.py`; `docs/testing/evidence/sql-detective-results.txt`) |
