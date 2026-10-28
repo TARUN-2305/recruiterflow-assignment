@@ -6,6 +6,7 @@ source-material/
 # --- Private working notes (may be published later by choice) ---
 CLAUDE.md
 docs/handoff/interview-guide.md
+docs/handoff/qa-reflection-draft.md
 
 # --- Secrets / local config ---
 .env

@@ -1,0 +1,14 @@
+# QA live run — 2026-10-28T14:40Z — Node v24.16.0, Playwright Version 1.64.1
+
+Running 8 tests using 6 workers
+
+  ok 5 [api] › tests\api\users.spec.ts:8:3 › ReqRes users API › GET /api/users/2 returns 200 and the user has an email (370ms)
+  ok 7 [api] › tests\api\users.spec.ts:16:3 › ReqRes users API › POST /api/users creates a user and returns 201 with the name (438ms)
+  ok 8 [api] › tests\api\users.spec.ts:26:3 › ReqRes users API › GET /api/users/23 returns 404 for a user that does not exist @bonus (388ms)
+  ok 2 [ui] › tests\ui\cart.spec.ts:11:3 › Cart › adding one product shows 1 on the cart badge (7.8s)
+  ok 4 [ui] › tests\ui\login.spec.ts:20:3 › Login › locked out user sees an error (7.7s)
+  ok 3 [ui] › tests\ui\login.spec.ts:12:3 › Login › standard user sees the Products page after logging in (7.9s)
+  ok 1 [ui] › tests\ui\cart.spec.ts:18:3 › Cart › removing the product makes the cart badge disappear @bonus (8.0s)
+  ok 6 [ui] › tests\ui\login.spec.ts:26:3 › Login › user can log out from the side menu @bonus (8.8s)
+
+  8 passed (12.3s)

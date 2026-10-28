@@ -40,7 +40,8 @@ If `REQRES_API_KEY` is unset, the API spec calls `test.skip(true, 'REQRES_API_KE
 - Error: `getByTestId('error')` → `toContainText('locked out')`
 - Add to cart: `getByRole('button', { name: 'Add to cart' }).first()`. **Alternative:** the specific `getByTestId('add-to-cart-sauce-labs-backpack')`, which is more stable. Decide after inspecting the live DOM.
 - Badge: `getByTestId('shopping-cart-badge')` → `toHaveText('1')`; after removal → `toHaveCount(0)` / `not.toBeVisible()`
-- Logout: `getByRole('button', { name: 'Open Menu' })`, then `getByRole('link', { name: 'Logout' })`; assert `toHaveURL('/')` and that the login button is visible.
+- Logout: `getByRole('button', { name: 'Open Menu' })`, then `getByRole('button', { name: 'Logout' })`; assert `toHaveURL('/')` and that the login button is visible. *(Verified 2026-10-28: the sidebar "Logout" `<a>` is exposed with the **button** role, not `link`. The first attempt with `link` timed out.)*
+- Add to cart: implemented as `getByTestId('inventory-item').filter({ hasText: 'Sauce Labs Backpack' }).getByRole('button', { name: 'Add to cart' })`. It is role-based, and it targets a named product, so the Remove bonus acts on the same item.
 
 ### API assertions
 

@@ -26,30 +26,30 @@ Source: `Recruiterflow_Internship_Assignments.pdf` (authoritative). Page numbers
 
 | ID | Page | Requirement | Class | Location | Evidence | Status |
 |---|---|---|---|---|---|---|
-| A-ENV-01 | 4 | Node.js 18 or newer | MUST | `qa/package.json` `engines` | `node -v` in README | Planned |
-| A-ENV-02 | 3 | Playwright + TypeScript suite | MUST | `qa/` | `npx playwright test` | Planned |
-| A-ENV-03 | 4 | Chromium only is fine | OOS (others) | `qa/playwright.config.ts` | Config review | Planned |
-| A-UI-01 | 3 | Valid login as `standard_user`/`secret_sauce`; "Products" title visible | MUST | `qa/tests/ui/login.spec.ts` | Live run | Planned |
-| A-UI-02 | 3 | `locked_out_user` login shows an error containing "locked out" | MUST | `qa/tests/ui/login.spec.ts` | Live run | Planned |
-| A-UI-03 | 3 | Log in, "Add to cart" on one product, cart badge shows **1** | MUST | `qa/tests/ui/cart.spec.ts` | Live run | Planned |
-| A-API-01 | 3 | Use Playwright's built-in `request` fixture; no browser for API tests | MUST | `qa/tests/api/users.spec.ts` | Code review | Planned |
-| A-API-02 | 3 | ReqRes API key sent in the `x-api-key` header (key from a free ReqRes account) | MUST | `qa/playwright.config.ts` (`extraHTTPHeaders` from `REQRES_API_KEY`), `qa/.env.example` | Live run; no key in git | Planned (needs user's key) |
-| A-API-03 | 4 | `GET /api/users/2` → status **200**, response has `data.email` | MUST | `qa/tests/api/users.spec.ts` | Live run | Planned |
-| A-API-04 | 4 | `POST /api/users` `{ "name": "morpheus", "job": "leader" }` → **201**, response name "morpheus" | MUST | `qa/tests/api/users.spec.ts` | Live run | Planned |
-| A-BON-01 | 4 | Remove product from cart; badge disappears | BONUS | `qa/tests/ui/cart.spec.ts` | Live run | Planned |
-| A-BON-02 | 4 | Log out via side menu; back on login page | BONUS | `qa/tests/ui/login.spec.ts` | Live run | Planned |
-| A-BON-03 | 4 | `GET /api/users/23` → **404** | BONUS | `qa/tests/api/users.spec.ts` | Live run | Planned |
-| A-BON-04 | 4 | Login steps in a small helper / Page Object, e.g. `pages/LoginPage.ts` | BONUS | `qa/pages/LoginPage.ts` | Code review | Planned |
-| A-QUAL-01 | 4 | Clone → `npm install` → `npx playwright test` shows results | MUST | `qa/` | Clean-clone run | Planned |
-| A-QUAL-02 | 5 | Clear test names, e.g. `'locked out user sees an error'` | MUST | All specs | Review | Planned |
-| A-QUAL-03 | 5 | Simple locators (`getByRole`/`getByText`/`getByTestId`); `testIdAttribute: 'data-test'` | MUST (quality) | `qa/playwright.config.ts`, specs | Review | Planned |
-| A-QUAL-04 | 5 | Every test ends with ≥1 `expect`; every Playwright call awaited | MUST | Specs | Review + `@typescript-eslint/no-floating-promises` | Planned |
-| A-QUAL-05 | 5 | Short README: install + run | MUST | `qa/README.md` | Review | Planned |
-| A-QUAL-06 | 5 | A few commits instead of one | MUST | Git history | `git log` | Planned |
-| A-SUG-01 | 4 | Suggested layout `tests/ui/login.spec.ts`, `tests/ui/cart.spec.ts`, `tests/api/users.spec.ts`, `pages/` | OPT (follow) | `qa/` | Review | Planned |
+| A-ENV-01 | 4 | Node.js 18 or newer | MUST | `qa/package.json` `engines` | `node -v` in README | Done (Node 20+ required by Playwright 1.64; documented in README) |
+| A-ENV-02 | 3 | Playwright + TypeScript suite | MUST | `qa/` | `npx playwright test` | Done (live run 2026-10-28, `docs/testing/evidence/qa-run.txt`) |
+| A-ENV-03 | 4 | Chromium only is fine | OOS (others) | `qa/playwright.config.ts` | Config review | Done (Chromium only) |
+| A-UI-01 | 3 | Valid login as `standard_user`/`secret_sauce`; "Products" title visible | MUST | `qa/tests/ui/login.spec.ts` | Live run | Done (live run 2026-10-28, `docs/testing/evidence/qa-run.txt`) |
+| A-UI-02 | 3 | `locked_out_user` login shows an error containing "locked out" | MUST | `qa/tests/ui/login.spec.ts` | Live run | Done (live run 2026-10-28, `docs/testing/evidence/qa-run.txt`) |
+| A-UI-03 | 3 | Log in, "Add to cart" on one product, cart badge shows **1** | MUST | `qa/tests/ui/cart.spec.ts` | Live run | Done (live run 2026-10-28, `docs/testing/evidence/qa-run.txt`) |
+| A-API-01 | 3 | Use Playwright's built-in `request` fixture; no browser for API tests | MUST | `qa/tests/api/users.spec.ts` | Code review | Done (`api` project uses only `request`) |
+| A-API-02 | 3 | ReqRes API key sent in the `x-api-key` header (key from a free ReqRes account) | MUST | `qa/playwright.config.ts` (`extraHTTPHeaders` from `REQRES_API_KEY`), `qa/.env.example` | Live run; no key in git | Done (key from git-ignored `qa/.env`; skip path verified) |
+| A-API-03 | 4 | `GET /api/users/2` → status **200**, response has `data.email` | MUST | `qa/tests/api/users.spec.ts` | Live run | Done (live run 2026-10-28, `docs/testing/evidence/qa-run.txt`) |
+| A-API-04 | 4 | `POST /api/users` `{ "name": "morpheus", "job": "leader" }` → **201**, response name "morpheus" | MUST | `qa/tests/api/users.spec.ts` | Live run | Done (live run 2026-10-28, `docs/testing/evidence/qa-run.txt`) |
+| A-BON-01 | 4 | Remove product from cart; badge disappears | BONUS | `qa/tests/ui/cart.spec.ts` | Live run | Done (live run 2026-10-28, `docs/testing/evidence/qa-run.txt`) |
+| A-BON-02 | 4 | Log out via side menu; back on login page | BONUS | `qa/tests/ui/login.spec.ts` | Live run | Done (live run 2026-10-28, `docs/testing/evidence/qa-run.txt`) |
+| A-BON-03 | 4 | `GET /api/users/23` → **404** | BONUS | `qa/tests/api/users.spec.ts` | Live run | Done (live run 2026-10-28, `docs/testing/evidence/qa-run.txt`) |
+| A-BON-04 | 4 | Login steps in a small helper / Page Object, e.g. `pages/LoginPage.ts` | BONUS | `qa/pages/LoginPage.ts` | Code review | Done (`qa/pages/LoginPage.ts`) |
+| A-QUAL-01 | 4 | Clone → `npm install` → `npx playwright test` shows results | MUST | `qa/` | Clean-clone run | Done locally; clean-clone check pending (M11) |
+| A-QUAL-02 | 5 | Clear test names, e.g. `'locked out user sees an error'` | MUST | All specs | Review | Done |
+| A-QUAL-03 | 5 | Simple locators (`getByRole`/`getByText`/`getByTestId`); `testIdAttribute: 'data-test'` | MUST (quality) | `qa/playwright.config.ts`, specs | Review | Done |
+| A-QUAL-04 | 5 | Every test ends with ≥1 `expect`; every Playwright call awaited | MUST | Specs | Review + `@typescript-eslint/no-floating-promises` | Done (lint passes with `no-floating-promises`) |
+| A-QUAL-05 | 5 | Short README: install + run | MUST | `qa/README.md` | Review | Done (`qa/README.md`) |
+| A-QUAL-06 | 5 | A few commits instead of one | MUST | Git history | `git log` | Done (3 QA commits) |
+| A-SUG-01 | 4 | Suggested layout `tests/ui/login.spec.ts`, `tests/ui/cart.spec.ts`, `tests/api/users.spec.ts`, `pages/` | OPT (follow) | `qa/` | Review | Done |
 | A-SUB-01 | 5 | Push to a **public** GitHub repo | USER | — | User confirms | Planned |
 | A-SUB-02 | 5 | Reply to recruiter email with link within **48 h** | USER | — | User confirms | Planned |
-| A-SUB-03 | 5 | 3–5 sentence reflection in that reply: done / stuck + attempts / learned or would improve | USER (we draft) | `docs/handoff/qa-reflection-draft.md` | User review | Planned |
+| A-SUB-03 | 5 | 3–5 sentence reflection in that reply: done / stuck + attempts / learned or would improve | USER (we draft) | `docs/handoff/qa-reflection-draft.md` (git-ignored) | User review | Draft ready (private, git-ignored) |
 | A-OOS-01 | 5 | CI, Docker, reporting tools | OOS | — | — | n/a |
 | A-OOS-02 | 5 | Full framework / every edge case | OOS | — | — | n/a |
 | A-OOS-03 | 5 | Checkout, sorting, multi-item cart: beyond the 5 scenarios ("Build a full framework or cover every edge case" is not needed) | OOS | — | — | n/a |
