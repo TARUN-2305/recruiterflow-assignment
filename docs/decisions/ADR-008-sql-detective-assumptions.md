@@ -23,7 +23,7 @@ These are loaded into a separate database, `hiring_ops`, via `scripts/load_sql_d
 
 | Q | Interpretation | Expected result (supplied data) |
 |---|---|---|
-| Q1 | `status = 'open'`, inner join to `recruiters` | 4 rows: postings 1, 2, 4, 5 |
+| Q1 | `status = 'open'`, `LEFT JOIN recruiters` so an open posting stays visible even if its recruiter row were missing (same result as an inner join on this data) | 4 rows: postings 1, 2, 4, 5 |
 | Q2 | `COUNT(DISTINCT applicant_id)` of Final-stage interviews per posting. `LEFT JOIN` so postings with 0 appear. `DISTINCT` protects against the same applicant having more than one Final row on a posting. | 1→2, 2→2, 3→1, 4→2, 5→0, 6→0, 7→2 |
 | Q3 | Person identity = `LOWER(TRIM(email))`, not name: names can collide between different people, and email is the stronger identifier. "Applied to a posting" = has ≥ 1 interview row for it (there is no applications table). Count `DISTINCT job_posting_id` per identity, `HAVING > 1`. | Ananya Rao (records 1 & 2 → postings 1, 4); Ben Turner (1, 3); Elena Popescu (2, 7) |
 | Q4 | Join interviews → postings → recruiters. Denominator = **all** Final-stage interviews, as worded ("total Final-stage interviews"), so pending and no-show would count. Numerator = `outcome = 'passed'`. `HAVING COUNT(*) >= 3`. Use `100.0 * … / NULLIF(…, 0)` to avoid integer division and divide-by-zero. Show passed, total and the rate. | Priya Shah 3/4 = 75.00%; Daniel Ortiz 2/4 = 50.00% |
@@ -37,7 +37,11 @@ These are loaded into a separate database, `hiring_ops`, via `scripts/load_sql_d
 
 ### Dialect
 
-The answer queries use standard SQL: `CASE` inside `SUM` rather than PostgreSQL-only `FILTER`, CTEs, and `RANK()`. They run unchanged on PostgreSQL ≥ 9 and SQLite ≥ 3.25. Any dialect-specific syntax gets a comment. The supplied DDL (`INT`, `VARCHAR`, `DATE`, trailing `--` comments) is valid PostgreSQL as written.
+The answer queries use standard SQL: `CASE` inside `SUM` rather than PostgreSQL-only `FILTER`, CTEs, and `RANK()`. The one exception is Q3's `STRING_AGG(DISTINCT … ORDER BY …)` column, which is PostgreSQL syntax and is commented as such; it only lists the posting ids for readability, and the answer does not depend on it. The supplied DDL (`INT`, `VARCHAR`, `DATE`, trailing `--` comments) is valid PostgreSQL as written.
+
+### Verified results (2026-10-28, PostgreSQL 16.14)
+
+`python -m scripts.load_sql_detective` loads 5/7/11/24 rows, and all five answers match the table above (`docs/testing/evidence/sql-detective-results.txt`). `tests/integration/test_sql_detective.py` asserts each result exactly. It also adds one extra placement to prove Q5 returns both recruiters when there is a tie.
 
 ## Alternatives considered
 

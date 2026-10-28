@@ -78,18 +78,18 @@ Evaluation weights (p. 5), for prioritisation: coverage 30%, readability/naming 
 | B-DOC-02 | 13 | README: install and run locally | MUST | `backend/README.md` | Clean-setup run | Planned |
 | B-DOC-03 | 13 | README: few-paragraph decisions and trade-offs, especially matching | MUST | `backend/README.md` | Review | Planned |
 | B-DOC-04 | 13 | README: where AI tools were used | MUST | `backend/README.md` | Review | Planned |
-| B-BON-01 | 11 | Tests (nice bonus) | BONUS (our gate: required) | `backend/tests/` | `pytest` | Done (55 tests: 34 unit, 21 integration) |
+| B-BON-01 | 11 | Tests (nice bonus) | BONUS (our gate: required) | `backend/tests/` | `pytest` | Done (63 tests: 34 unit, 29 integration) |
 | B-BON-02 | 11 | API docs (nice bonus) | BONUS | FastAPI OpenAPI at `/docs` + `docs/architecture/api-contracts.md` | Manual check | In progress (FastAPI OpenAPI generated; manual check in M4) |
 | B-OOS-01 | 11 | Frontend for the bot | OOS | — | — | n/a |
-| B-SQLD-01 | 11–13 | Load the 4 supplied tables **as-is** (no redesign), with supplied rows | MUST | `backend/sql_detective/schema.sql`, `backend/sql_detective/seed.sql` (verbatim) | Row-count test (5/7/11/24); diff vs source | Planned |
-| B-SQLD-02 | 13 | Q1: open postings + owning recruiter name | MUST | `backend/sql_detective/sql_detective.sql` | Result test vs expected set | Planned |
-| B-SQLD-03 | 13 | Q2: per posting, number of applicants who reached Final | MUST | same | Result test | Planned |
-| B-SQLD-04 | 13 | Q3: people who effectively applied to >1 posting (dirty data) | MUST | same | Result test (Ananya, Ben, Elena) | Planned |
-| B-SQLD-05 | 13 | Q4: per-recruiter Final conversion (passed ÷ total Final), only recruiters with ≥3 Finals | MUST | same | Result test (Priya 0.75, Daniel 0.50) | Planned |
-| B-SQLD-06 | 13 | Q5: window function, top recruiter by Final passes per department | BONUS | same | Result test | Planned |
-| B-SQLD-07 | 13 | Single `.sql` file; one query per question; each preceded by a comment with the question number | MUST | same | Review | Planned |
+| B-SQLD-01 | 11–13 | Load the 4 supplied tables **as-is** (no redesign), with supplied rows | MUST | `backend/sql_detective/schema.sql`, `backend/sql_detective/seed.sql` (verbatim) | Row-count test (5/7/11/24); diff vs source | Done (verbatim files checked against the PDF text; 5/7/11/24 rows; no keys added) |
+| B-SQLD-02 | 13 | Q1: open postings + owning recruiter name | MUST | `backend/sql_detective/sql_detective.sql` | Result test vs expected set | Done (`tests/integration/test_sql_detective.py`; `docs/testing/evidence/sql-detective-results.txt`) |
+| B-SQLD-03 | 13 | Q2: per posting, number of applicants who reached Final | MUST | same | Result test | Done (`tests/integration/test_sql_detective.py`; `docs/testing/evidence/sql-detective-results.txt`) |
+| B-SQLD-04 | 13 | Q3: people who effectively applied to >1 posting (dirty data) | MUST | same | Result test (Ananya, Ben, Elena) | Done (`tests/integration/test_sql_detective.py`; `docs/testing/evidence/sql-detective-results.txt`) |
+| B-SQLD-05 | 13 | Q4: per-recruiter Final conversion (passed ÷ total Final), only recruiters with ≥3 Finals | MUST | same | Result test (Priya 0.75, Daniel 0.50) | Done (`tests/integration/test_sql_detective.py`; `docs/testing/evidence/sql-detective-results.txt`) |
+| B-SQLD-06 | 13 | Q5: window function, top recruiter by Final passes per department | BONUS | same | Result test | Done, ties tested (`tests/integration/test_sql_detective.py`; `docs/testing/evidence/sql-detective-results.txt`) |
+| B-SQLD-07 | 13 | Single `.sql` file; one query per question; each preceded by a comment with the question number | MUST | same | Review | Done (`-- Q1`..`-- Q5` markers; test checks one statement each) |
 | B-SUB-01 | 13 | Git repo link (public, or private with access) containing the Part 1 project | USER | — | — | Planned |
-| B-SUB-02 | 13 | `sql_detective.sql` in the same repo | MUST | `backend/sql_detective/sql_detective.sql` | Review | Planned |
+| B-SUB-02 | 13 | `sql_detective.sql` in the same repo | MUST | `backend/sql_detective/sql_detective.sql` | Review | Done (`backend/sql_detective/sql_detective.sql`) |
 | B-TIME-01 | 14 | ~4 h budget; follow-up walkthrough with "what if" curveballs | USER (prep) | `docs/handoff/interview-guide.md` | — | Planned |
 
 ## C — Trip Splitter (pp. 15–19)
