@@ -111,34 +111,34 @@ Evaluation weights (p. 5), for prioritisation: coverage 30%, readability/naming 
 | C-EXP-03 | 16 | Category filter; total of currently shown expenses | MUST | `pages/ExpensesPage.tsx` | RTL | Planned |
 | C-EXP-04 | 16 | Delete after user confirms; balances update immediately | MUST | `ExpensesTable.tsx`, `expensesSlice.ts` | RTL (confirm yes/no) | Planned |
 | C-EXP-05 | 16 | Clear empty state: no expenses; none in chosen category | MUST | `ExpensesPage.tsx` | RTL | Planned |
-| C-VAL-01 | 16 | On Save: error next to **every** invalid field; save nothing | MUST | `domain/validation.ts`, form | Unit + RTL | Planned |
-| C-VAL-02 | 16 | Description required, ≤ 60 chars | MUST | `validation.ts` | Unit (0, 60, 61 chars) | Planned |
-| C-VAL-03 | 16 | Amount required, > ₹0, ≤ ₹10,00,000, ≤ 2 decimals; negative → **"Amount must be more than ₹0"** | MUST | `domain/money.ts`, `validation.ts` | Unit (exact string) | Planned |
-| C-VAL-04 | 16 | Paid by, date, category required; date not in the future | MUST | `validation.ts` | Unit (injected today) | Planned |
-| C-VAL-05 | 16 | Equal: at least one member selected | MUST | `validation.ts` | Unit | Planned |
-| C-VAL-06 | 16 | Exact: each ≥ ₹0; sum equals amount exactly; else show left/over, e.g. **"₹12.50 left to assign"** | MUST | `validation.ts` | Unit (left / over / exact) | Planned |
-| C-VAL-07 | 16 | Percent: each 0–100, ≤ 2 decimals; total exactly 100 | MUST | `validation.ts` | Unit | Planned |
-| C-MONEY-01 | 16 | Balance = paid − own shares; positive = gets back | MUST | `domain/balances.ts` | Unit | Planned |
-| C-MONEY-02 | 16 | Payer need not be in split | MUST | `balances.ts` | Unit (sample e5) | Planned |
-| C-MONEY-03 | 16 | Never lose/invent a paisa; ₹100 ÷ 3 = 33.34 + 33.33 + 33.33 | MUST | `domain/allocation.ts` | Unit (required case) | Planned |
-| C-MONEY-04 | 16 | One rule for the extra paisa, used everywhere, stated in README | MUST | `allocation.ts`, ADR-004, `frontend/README.md` | Unit + review | Planned |
-| C-MONEY-05 | 16 | Balances sum to exactly ₹0 | MUST | `balances.ts` | Unit (sample + generated cases) | Planned |
-| C-MONEY-06 | 16 | Indian number format, e.g. ₹1,00,000.00 | MUST | `domain/format.ts` | Unit | Planned |
-| C-MONEY-07 | 16 | Amounts stored as integer paise (₹1,250.50 = 125050) | MUST | `domain/types.ts`, `money.ts` | Unit | Planned |
-| C-DATA-01 | 16 | No backend; start from the supplied sample data (e.g. `src/data/sample-data.json`) | MUST | `frontend/src/data/sample-data.json` (verbatim) | Fidelity unit test | Planned |
+| C-VAL-01 | 16 | On Save: error next to **every** invalid field; save nothing | MUST | `domain/validation.ts`, form | Unit + RTL | Domain done (`frontend/src/domain/`, unit tests); UI in M6 |
+| C-VAL-02 | 16 | Description required, ≤ 60 chars | MUST | `validation.ts` | Unit (0, 60, 61 chars) | Domain done (60/61 chars tested); UI in M6 |
+| C-VAL-03 | 16 | Amount required, > ₹0, ≤ ₹10,00,000, ≤ 2 decimals; negative → **"Amount must be more than ₹0"** | MUST | `domain/money.ts`, `validation.ts` | Unit (exact string) | Domain done (exact negative message tested); UI in M6 |
+| C-VAL-04 | 16 | Paid by, date, category required; date not in the future | MUST | `validation.ts` | Unit (injected today) | Domain done (injected today, impossible dates); UI in M6 |
+| C-VAL-05 | 16 | Equal: at least one member selected | MUST | `validation.ts` | Unit | Domain done (`frontend/src/domain/`, unit tests); UI in M6 |
+| C-VAL-06 | 16 | Exact: each ≥ ₹0; sum equals amount exactly; else show left/over, e.g. **"₹12.50 left to assign"** | MUST | `validation.ts` | Unit (left / over / exact) | Domain done ("₹12.50 left to assign" tested); UI in M6 |
+| C-VAL-07 | 16 | Percent: each 0–100, ≤ 2 decimals; total exactly 100 | MUST | `validation.ts` | Unit | Domain done (`frontend/src/domain/`, unit tests); UI in M6 |
+| C-MONEY-01 | 16 | Balance = paid − own shares; positive = gets back | MUST | `domain/balances.ts` | Unit | Done (`balances.ts`; golden sample balances) |
+| C-MONEY-02 | 16 | Payer need not be in split | MUST | `balances.ts` | Unit (sample e5) | Done (sample e5 test) |
+| C-MONEY-03 | 16 | Never lose/invent a paisa; ₹100 ÷ 3 = 33.34 + 33.33 + 33.33 | MUST | `domain/allocation.ts` | Unit (required case) | Done (₹100 ÷ 3 test; 2,000 generated allocations) |
+| C-MONEY-04 | 16 | One rule for the extra paisa, used everywhere, stated in README | MUST | `allocation.ts`, ADR-004, `frontend/README.md` | Unit + review | Done in code + ADR-004; README statement in M7 |
+| C-MONEY-05 | 16 | Balances sum to exactly ₹0 | MUST | `balances.ts` | Unit (sample + generated cases) | Done (sample + 500 generated trips sum to 0) |
+| C-MONEY-06 | 16 | Indian number format, e.g. ₹1,00,000.00 | MUST | `domain/format.ts` | Unit | Done (`formatINR`, cross-checked with Intl en-IN) |
+| C-MONEY-07 | 16 | Amounts stored as integer paise (₹1,250.50 = 125050) | MUST | `domain/types.ts`, `money.ts` | Unit | Done (types + strict parsers) |
+| C-DATA-01 | 16 | No backend; start from the supplied sample data (e.g. `src/data/sample-data.json`) | MUST | `frontend/src/data/sample-data.json` (verbatim) | Fidelity unit test | Done (`src/data/sample-data.json` checked against the PDF; validated at load) |
 | C-DATA-02 | 16 | Survive reload via `localStorage`; nothing saved / unreadable → sample data | MUST | `frontend/src/services/persistence.ts` | Unit + RTL reload simulation + manual | Planned |
-| C-DATA-03 | 16–17 | Member `{id, name}`; Expense `id, description, amount (int paise), paidBy, date (YYYY-MM-DD), category, split` | MUST | `domain/types.ts` | Typecheck | Planned |
-| C-DATA-04 | 17 | Split discriminated by `type`: equal `{memberIds}`, exact `{shares: paise}`, percent `{shares: percent}` | MUST | `domain/types.ts` | Typecheck + unit | Planned |
-| C-DATA-05 | 17 | Write the TS types yourself | MUST | `domain/types.ts` | Review | Planned |
+| C-DATA-03 | 16–17 | Member `{id, name}`; Expense `id, description, amount (int paise), paidBy, date (YYYY-MM-DD), category, split` | MUST | `domain/types.ts` | Typecheck | Done (`domain/types.ts`) |
+| C-DATA-04 | 17 | Split discriminated by `type`: equal `{memberIds}`, exact `{shares: paise}`, percent `{shares: percent}` | MUST | `domain/types.ts` | Typecheck + unit | Done (discriminated union) |
+| C-DATA-05 | 17 | Write the TS types yourself | MUST | `domain/types.ts` | Review | Done |
 | C-TECH-01 | 18 | React + TypeScript, self-scaffolded (Vite suggested); React Router | MUST | `frontend/` | `npm run build` | Planned |
-| C-TECH-02 | 18 | `"strict": true`; `npm run typecheck` zero errors | MUST | `frontend/tsconfig*.json` | Command output | Planned |
-| C-TECH-03 | 18 | No `any`, `@ts-ignore`, `@ts-expect-error`; avoid `as` and `!` (comment if unavoidable) | MUST | All TS | ESLint rules + grep in acceptance | Planned |
+| C-TECH-02 | 18 | `"strict": true`; `npm run typecheck` zero errors | MUST | `frontend/tsconfig*.json` | Command output | Passing so far (0 errors at M5) |
+| C-TECH-03 | 18 | No `any`, `@ts-ignore`, `@ts-expect-error`; avoid `as` and `!` (comment if unavoidable) | MUST | All TS | ESLint rules + grep in acceptance | Enforced by ESLint rules; passing at M5 |
 | C-TECH-04 | 18 | Redux Toolkit holds members and expenses; typed `useAppDispatch`/`useAppSelector` | MUST | `frontend/src/store/` | Review + tests | Planned |
 | C-TECH-05 | 18 | Where localStorage is read/written is your call; **say why in README** | MUST | ADR-005, `frontend/README.md` | Review | Planned |
-| C-TECH-06 | 18 | Money parsing, splitting, balances, validation as plain TS functions testable without React | MUST | `frontend/src/domain/` | Unit tests import no React | Planned |
-| C-TECH-07 | 18 | Vitest/Jest + RTL; at minimum split/balance logic incl. ₹100 ÷ 3, and form invalid-errors + valid-save | MUST | `frontend/src/**/*.test.ts(x)` | `npm test` | Planned |
-| C-TECH-08 | 18 | ESLint with typescript-eslint; `npm run lint` passes | MUST | `frontend/eslint.config.js` | Command output | Planned |
-| C-TECH-09 | 19 | No form/validation libraries; no component libraries | MUST | `frontend/package.json` | Dependency review | Planned |
+| C-TECH-06 | 18 | Money parsing, splitting, balances, validation as plain TS functions testable without React | MUST | `frontend/src/domain/` | Unit tests import no React | Done (`src/domain/` has no React imports) |
+| C-TECH-07 | 18 | Vitest/Jest + RTL; at minimum split/balance logic incl. ₹100 ÷ 3, and form invalid-errors + valid-save | MUST | `frontend/src/**/*.test.ts(x)` | `npm test` | Logic tests done (103); form tests in M6 |
+| C-TECH-08 | 18 | ESLint with typescript-eslint; `npm run lint` passes | MUST | `frontend/eslint.config.js` | Command output | Passing (typescript-eslint strictTypeChecked) |
+| C-TECH-09 | 19 | No form/validation libraries; no component libraries | MUST | `frontend/package.json` | Dependency review | Done so far (no form/validation/component libraries in package.json) |
 | C-TECH-10 | 19 | Responsive to 360 px (table may scroll or become cards) | MUST | `frontend/src/styles/` | Manual at 360 px (browser pane) | Planned |
 | C-TECH-11 | 19 | Visible labels; errors next to fields; whole app works by keyboard | MUST | Components | RTL (label queries) + manual keyboard pass | Planned |
 | C-TECH-12 | 19 | Scripts: `dev`, `build`, `typecheck`, `lint`, `test` | MUST | `frontend/package.json` | Run each | Planned |

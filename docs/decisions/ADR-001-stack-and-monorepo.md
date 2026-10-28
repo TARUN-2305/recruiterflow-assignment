@@ -41,7 +41,8 @@ compose.yaml   optional PostgreSQL (+ API) for local dev
 
 ## Frontend stack notes
 
-- **Vite + React + TS** (the brief suggests Vite). Exact versions will be checked against current docs at scaffold time. Pin the React Router major (v7 in "declarative/library mode": `BrowserRouter`/`Routes`) to avoid framework-mode features.
+- **Vite + React + TS** (the brief suggests Vite). Exact versions were checked at scaffold time (M5, 2026-10-28) and pinned: Vite 8.3.4, React 19.3.0, Redux Toolkit 2.13.0, React Router 8.4.0, Vitest 5.0.4, TypeScript 6.0.3.
+- **React Router v8, not v7 as first planned.** v8 is the current major. We use only its declarative API (`BrowserRouter`, `Routes`, `Route`, `NavLink`, `useNavigate`, `useLocation`), which I checked from the installed package; framework mode is not used. The trade-off is that v8 requires **Node ≥ 22.22**. That is acceptable now that Node 20 is end-of-life, and the frontend README states it. React Router 7.18.x (Node 20+) would be the fallback if a reviewer is stuck on older Node.
 - **Vitest + React Testing Library + jsdom**: Vite-native and Jest-compatible API.
 - **Plain CSS** (one small global stylesheet plus a few component-level files). The brief allows any styling, and plain CSS is the least to explain. No CSS framework is needed.
 - **Banned:** any form/validation library (RHF, Formik, Zod, Yup…) and any component library (MUI, AntD, Chakra…). These rules apply **only in `frontend/`**.
