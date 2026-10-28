@@ -35,7 +35,7 @@ compose.yaml   optional PostgreSQL (+ API) for local dev
 
 ## Python dependency management — alternatives
 
-- **pip + venv + `pyproject.toml` with pinned versions, plus `requirements.lock` from `pip freeze`** (recommended): no extra tool to install, and familiar to reviewers.
+- **pip + venv, with exact pins in `requirements.txt` (runtime) and `requirements-dev.txt` (tests/lint), plus `requirements.lock` from `pip freeze`** (chosen in M2): no extra tool to install, and familiar to reviewers. `pyproject.toml` holds only tool configuration (pytest, ruff, mypy). The app is run from `backend/` rather than installed as a package, so there is no packaging setup to explain.
 - `uv` with `uv.lock`: faster and gives a real lockfile, but it isn't installed and would be one more thing to explain.
 - Poetry: heavier than this project needs.
 

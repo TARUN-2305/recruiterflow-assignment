@@ -29,7 +29,8 @@ Placeholders look like `postgresql://app:change-me@localhost:5432/recruiter_bot`
 docker compose up -d db
 cd backend
 python -m venv .venv && .venv/Scripts/activate   # Windows (POSIX: source .venv/bin/activate)
-pip install -e ".[dev]"
+pip install -r requirements-dev.txt
+cp .env.example .env              # same user/password as the root .env
 python -m scripts.migrate
 python -m scripts.seed            # run twice: counts stay 15 / 6
 uvicorn app.main:app --reload
@@ -59,3 +60,4 @@ docker compose down        # keep data   |   docker compose down -v   # reset (r
 
 - `.gitattributes` forces LF for `*.sql`, `*.sh`, `Dockerfile` and `compose.yaml`. Postgres init scripts with CRLF can break inside Linux containers.
 - Port 5432 may already be in use by a local Postgres. Override it with `POSTGRES_PORT`.
+- Use `127.0.0.1`, not `localhost`, in `DATABASE_URL`. On this Windows machine, `localhost` resolves to IPv6 `::1` first, and the connection stalls for many seconds before falling back to IPv4. Measured 2026-10-28: 0.03 s with `127.0.0.1` vs about 8 s with `localhost`. The compose port is bound to `127.0.0.1` only.

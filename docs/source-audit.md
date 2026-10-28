@@ -98,7 +98,7 @@ Source order is shown below. **IDs are not in the source**; the `#` column is ou
 
 Derived facts, used in design and tests:
 - Availability values: `Immediate` (8), `2 weeks` (3), `Not looking` (4). This is a closed set of exactly 3 values.
-- 4 candidates have 4 skills (MacGyver, Olivia, Ted, Miranda); 11 have 3. Every candidate has 2 traits.
+- 5 candidates have 4 skills (MacGyver, Olivia, Ted, Miranda, Dwight); 10 have 3, for 50 candidate–skill links. Every candidate has 2 traits (30 links, 27 distinct). Jobs have 16 required-skill links and 12 culture-keyword links. *(Corrected in M2: the Phase 0 draft said 4 and 11, missing Dwight. The DB row counts after seeding exposed the error.)*
 - 27 distinct candidate skills. 13 appear in no job: chemistry, loyalty, mentorship, minimalism, optimism, persuasion, precision, project-management, resourcefulness, security, theoretical-analysis, time-management, woodworking.
 - All source skill/trait/keyword labels are already lower-case and hyphenated with no surrounding spaces. Normalisation is therefore an identity on source data, but it is still enforced for safety.
 - Traits that equal some culture keyword: analytical, decisive, empathetic, enthusiastic, innovative, organized, persistent. **`calm` (MacGyver) is not the same token as `calm-under-pressure`** (Incident Commander). We will not fuzzy-match them (see ADR-003).
