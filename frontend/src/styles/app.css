@@ -240,7 +240,8 @@ main:focus {
 
 .expenses-table {
   width: 100%;
-  min-width: 720px;
+  /* Fits a 768px tablet without scrolling; narrower phones scroll the table sideways. */
+  min-width: 640px;
   border-collapse: collapse;
 }
 

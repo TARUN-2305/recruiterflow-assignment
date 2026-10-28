@@ -10,7 +10,9 @@ export function NotFoundPage() {
       </h1>
       <p>There is no page at this address.</p>
       <p>
-        <Link to="/">Back to Expenses</Link>
+        <Link to="/" className="button">
+          Back to Expenses
+        </Link>
       </p>
     </section>
   );

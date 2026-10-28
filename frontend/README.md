@@ -31,7 +31,7 @@ Everything in the brief is implemented. Not finished: there is no way to edit an
 
 - Editing an expense, reusing the same form.
 - A "settle up" view: the fewest payments that clear every balance.
-- A table that becomes cards on phones; today it scrolls sideways below about 720 px.
+- A table that becomes cards on phones; today it scrolls sideways below about 700 px.
 - Browser end-to-end tests (Playwright) for the full add, reload and delete flow.
 
 ## 4. AI use
