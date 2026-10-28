@@ -1,0 +1,47 @@
+# --- Private source material (never publish) ---
+Recruiterflow_Internship_Assignments.pdf
+Recruiterflow_Internship_Assignments.md
+source-material/
+
+# --- Private working notes (may be published later by choice) ---
+CLAUDE.md
+docs/handoff/interview-guide.md
+
+# --- Secrets / local config ---
+.env
+.env.*
+!.env.example
+
+# --- Node ---
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+
+# --- Playwright (reports/traces can contain request headers) ---
+qa/test-results/
+qa/playwright-report/
+qa/blob-report/
+qa/playwright/.cache/
+
+# --- Python ---
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# --- Local databases ---
+*.db
+*.sqlite
+*.sqlite3
+
+# --- OS / editors ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
