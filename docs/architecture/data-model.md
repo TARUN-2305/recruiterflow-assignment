@@ -1,4 +1,4 @@
-# Data Model (proposal, Phase 0)
+# Data Model (as built, 2026-10-28)
 
 ## 1. Recruiter Bot — normalised schema (PostgreSQL)
 

@@ -1,4 +1,4 @@
-# Low-Level Design (proposal, Phase 0)
+# Low-Level Design (as built, 2026-10-28)
 
 Final names may change slightly during implementation; this document will be updated to match the code.
 
@@ -129,27 +129,33 @@ src/
 ├── main.tsx                     # createRoot, <Provider>, <BrowserRouter>
 ├── app/App.tsx                  # <Routes>: "/", "/expenses/new", "*"
 ├── app/Layout.tsx               # <header><nav> NavLink×2 (aria-current) + <main><Outlet/>
+├── app/usePageHeading.ts        # document.title + focus <h1> after in-app navigation
 ├── data/sample-data.json        # verbatim from PDF
+├── data/sampleData.ts           # sampleTripData(): validated fresh copy of the JSON
 ├── domain/                      # pure TS, no React imports
-│   ├── types.ts                 # Member, Category, Split, Expense, ExpenseDraft, FieldErrors
-│   ├── money.ts                 # parseRupeesToPaise, parsePercentToBasisPoints, percentNumberToBasisPoints
-│   ├── allocation.ts            # allocate(), sharesFor(expense, members)
+│   ├── types.ts                 # Member, Category, Split, Expense, isCategory()
+│   ├── money.ts                 # parseHundredths() (rupees→paise and percent→bp), percentToBasisPoints(), basisPointsToPercent()
+│   ├── allocation.ts            # allocate(total, weights in member order), sharesFor(expense, memberOrder)
 │   ├── balances.ts              # computeBalances(), describeBalance()
-│   ├── format.ts                # formatINR(), describeSplit()
+│   ├── format.ts                # formatINR(), formatPercent(), describeSplit(), formatDate()
+│   ├── dates.ts                 # isValidIsoDate(), localToday()
 │   ├── expenses.ts              # sortNewestFirst(), filterByCategory(), totalOf()
-│   ├── validation.ts            # validateExpenseDraft(draft, members, today, newId)
-│   └── parsePersisted.ts        # isExpense()/parseExpenses(unknown) type guards (shared by sample + storage)
+│   ├── validation.ts            # ExpenseDraft, FieldErrors, validateExpenseDraft(draft, members, today, newId)
+│   └── parse.ts                 # parseExpenses(), parseTripData(): type guards from `unknown` (storage + sample)
 ├── store/
 │   ├── index.ts                 # makeStore(preloaded), RootState, AppDispatch
 │   ├── hooks.ts                 # useAppDispatch = useDispatch.withTypes<AppDispatch>() etc.
 │   ├── membersSlice.ts          # initial = sample members
 │   ├── expensesSlice.ts         # expenseAdded, expenseDeleted
-│   └── selectors.ts             # selectSortedExpenses, selectBalances (createSelector)
-├── services/persistence.ts      # loadExpenses(storage), startPersistence(store, storage)
-├── features/expenses/           # AddExpenseForm, SplitFields, BalancesList, ExpensesTable, CategoryFilter
+│   └── selectors.ts             # selectSortedExpenses, selectBalances, selectMemberNames (createSelector)
+├── services/persistence.ts      # loadExpenses, saveExpenses, startPersistence, browserStorage, createAppStore
+├── features/expenses/           # AddExpenseForm, SplitFields, FieldError, BalancesList, ExpensesTable
 ├── pages/                       # ExpensesPage, AddExpensePage, NotFoundPage
-└── styles/                      # app.css (+ small per-feature css)
+├── styles/app.css               # one plain stylesheet
+└── test/                        # setup, renderApp() + MemoryStorage, sample fixture, seeded PRNG
 ```
+
+Tests are colocated with the code they test (`*.test.ts(x)`).
 
 ### C.2 Types
 
@@ -178,29 +184,30 @@ export interface Expense {
 ```
 
 - Reducers: `expenseAdded(Expense)` pushes onto the list; `expenseDeleted(id)` filters it out.
-- Selectors: `selectMembers`, `selectExpenses`, `selectSortedExpenses` (date desc, then insertion index desc), and `selectBalances` (memoised; returns `{ memberId, name, paise }[]` in member order).
+- Selectors: `selectMembers`, `selectExpenses`, `selectSortedExpenses` (date desc, then insertion index desc), and `selectBalances` (memoised; returns `{ memberId, name, balance }[]` in member order), and `selectMemberNames` (id → name map for the table).
 - The filtered list and total are computed in the page with `useMemo(filterByCategory(...))`, because the filter is local state.
 
 ### C.4 Form model
 
-- Draft state: `{ description, amount, paidBy, date, category, splitType, equalSelected: Record<MemberId, boolean>, exactInputs: Record<MemberId, string>, percentInputs: Record<MemberId, string> }`. It is managed by `useReducer`, all fields are raw strings or booleans, and the per-mode inputs persist when the user switches split type.
+- Draft state: `{ description, amount, paidBy, date, category, splitType, equalSelected: Record<MemberId, boolean>, exactInputs: Record<MemberId, string>, percentInputs: Record<MemberId, string> }`. It is held in `useState` in `AddExpenseForm`, all fields are raw strings or booleans, and the per-mode inputs persist when the user switches split type.
 - Defaults: empty fields, `date` = today, all members selected for Equal.
+- Errors appear after the first Save attempt; after that they are re-derived from the draft on every render (not stored), so each clears as soon as it is fixed.
 - `validateExpenseDraft` returns `{ ok: true; expense } | { ok: false; errors: FieldErrors }`, where `FieldErrors` = `Partial<Record<'description'|'amount'|'paidBy'|'date'|'category'|'split', string>> & { shares?: Record<MemberId, string> }`.
 - Rules (C-VAL-01..07):
   - Every field is validated independently, so all errors appear at once.
   - Split errors are computed only when the amount parses, because left/over needs the total. Otherwise the split shows per-share format errors only.
   - The exact sum message reads `"₹12.50 left to assign"` or `"₹12.50 over the total"`.
-  - Percent sum message: `"Percentages add up to 90%; they must total 100%"`.
+  - Percent sum message: `"Percentages add up to 90%; they must total exactly 100%"`.
 - Accessibility:
   - `<form noValidate>`. Every control has a `<label htmlFor>`.
   - Errors sit in `<p id="…-error">` next to their field, linked with `aria-describedby`, and the field gets `aria-invalid`.
   - On a failed submit, focus moves to the first invalid control.
   - Split type is a `<fieldset><legend>` of radios. Member checkboxes and inputs are labelled with member names.
-- Cancel: `navigate('/')`. Save: dispatch, then `navigate('/', { state: { notice: 'Expense "Dinner" added.' } })`.
+- Cancel: `navigate('/')`. Save (in `AddExpensePage`): dispatch, then `navigate('/', { state: { notice: 'Added “Dinner” (₹1,500.00).' } })`.
 
 ### C.5 Expenses page
 
-- The notice comes from `location.state`. It is copied into local state, then `navigate('.', { replace: true, state: null })`. It is shown in a `role="status"` region.
+- The notice comes from `location.state`. It is copied into local state, then `navigate(location.pathname, { replace: true, state: null })`. It is shown in a `role="status"` region.
 - Balances: a list of "Aarav — gets back ₹18,554.20".
 - Filter: `<label>Category <select>` with "All" plus 5 options.
 - Total: "Showing N expenses · Total ₹X".

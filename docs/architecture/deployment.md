@@ -1,4 +1,4 @@
-# Deployment / Local Run Design (proposal, Phase 0)
+# Deployment / Local Run Design (as built, 2026-10-28)
 
 Everything runs locally. There is no cloud deployment. Containerisation is optional (ADR-006).
 
@@ -6,7 +6,7 @@ Everything runs locally. There is no cloud deployment. Containerisation is optio
 
 | Tool | Version (dev machine) | Needed for |
 |---|---|---|
-| Node.js | ≥ 18 (have 24.16) | `qa/`, `frontend/` |
+| Node.js | `qa/` ≥ 20 (Playwright 1.64); `frontend/` ≥ 22.22 (React Router 8). Dev machine: 24.16 | `qa/`, `frontend/` |
 | Python | ≥ 3.12 (have 3.13.13) | `backend/` |
 | Docker Desktop + Compose | have 29.4 / v5.1 (daemon must be started) | PostgreSQL (or install Postgres locally) |
 | ReqRes API key | user-supplied | QA API tests |

@@ -1,6 +1,6 @@
 # ADR-007 — QA automation architecture and secret handling
 
-- **Status:** Proposed (Phase 0)
+- **Status:** Accepted and implemented (M1–M7, 2026-10-28).
 - **Mandated by brief?** Playwright + TS, Node ≥ 18, the `request` fixture for API tests, the `x-api-key` header, the 5 named scenarios, simple locators, awaited calls, and an `expect` in every test. Structure and config are our choice, guided by the brief's suggested layout.
 
 ## Decision
@@ -31,7 +31,7 @@ qa/
 
 If `REQRES_API_KEY` is unset, the API spec calls `test.skip(true, 'REQRES_API_KEY is not set — see qa/README.md')`. A reviewer without a key sees **"skipped" with the reason**, rather than a confusing 401 failure. A skip is never reported as a pass, and the README states this plainly.
 
-*Alternative:* fail hard. That is more "honest" in CI, but it makes a fresh clone look broken. **Open for candidate review.**
+*Alternative:* fail hard. That is more "honest" in CI, but it makes a fresh clone look broken. **Decided (Phase 0): skip with a reason.** Verified in M8: without a key, both required API tests show as skipped with the message.
 
 ### Locator strategy (to be verified against the live site in Phase 4)
 

@@ -40,7 +40,7 @@ Source: `Recruiterflow_Internship_Assignments.pdf` (authoritative). Page numbers
 | A-BON-02 | 4 | Log out via side menu; back on login page | BONUS | `qa/tests/ui/login.spec.ts` | Live run | Done (live run 2026-10-28, `docs/testing/evidence/qa-run.txt`) |
 | A-BON-03 | 4 | `GET /api/users/23` → **404** | BONUS | `qa/tests/api/users.spec.ts` | Live run | Done (live run 2026-10-28, `docs/testing/evidence/qa-run.txt`) |
 | A-BON-04 | 4 | Login steps in a small helper / Page Object, e.g. `pages/LoginPage.ts` | BONUS | `qa/pages/LoginPage.ts` | Code review | Done (`qa/pages/LoginPage.ts`) |
-| A-QUAL-01 | 4 | Clone → `npm install` → `npx playwright test` shows results | MUST | `qa/` | Clean-clone run | Done locally; clean-clone check pending (M11) |
+| A-QUAL-01 | 4 | Clone → `npm install` → `npx playwright test` shows results | MUST | `qa/` | Clean-clone run | Done (fresh clone from GitHub: npm install + npx playwright test, 8/8; `docs/testing/results.md`) |
 | A-QUAL-02 | 5 | Clear test names, e.g. `'locked out user sees an error'` | MUST | All specs | Review | Done |
 | A-QUAL-03 | 5 | Simple locators (`getByRole`/`getByText`/`getByTestId`); `testIdAttribute: 'data-test'` | MUST (quality) | `qa/playwright.config.ts`, specs | Review | Done |
 | A-QUAL-04 | 5 | Every test ends with ≥1 `expect`; every Playwright call awaited | MUST | Specs | Review + `@typescript-eslint/no-floating-promises` | Done (lint passes with `no-floating-promises`) |
@@ -158,7 +158,7 @@ Evaluation weights (p. 5), for prioritisation: coverage 30%, readability/naming 
 | E-05 | Docker Compose: PostgreSQL (+ optional API service); backend Dockerfile, non-root | `compose.yaml`, `backend/Dockerfile` | Done (`compose.yaml` db + api, `backend/Dockerfile`, non-root; `docs/testing/evidence/docker-compose-check.md`) |
 | E-06 | Ruff (lint + format) and mypy for backend | `backend/pyproject.toml` | Done (ruff incl. S608, mypy strict) |
 | E-07 | ESLint `no-floating-promises` in `qa/` to enforce "every call awaited" | `qa/eslint.config.js` | Done |
-| E-08 | Architecture docs (HLD/LLD/ERD/API), ADRs, test strategy, interview guide | `docs/` | In progress |
+| E-08 | Architecture docs (HLD/LLD/ERD/API), ADRs, test strategy, interview guide | `docs/` | Done (as-built docs, ADRs, evidence, runbook, results; interview guide private) |
 | E-09 | Generated-case invariant tests for money (seeded PRNG, no extra library) | `frontend/src/domain/*.test.ts` | Done (2,000 allocations, 500 trips, 1,000 formatter cases) |
 | E-10 | Least-privilege DB role for the app | `compose` init script | Not done (documented in ADR-006; dev DB is localhost-only) |
 

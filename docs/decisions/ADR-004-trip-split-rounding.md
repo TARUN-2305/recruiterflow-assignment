@@ -1,6 +1,6 @@
 # ADR-004 — Trip Splitter money representation, allocation and rounding
 
-- **Status:** Proposed (Phase 0)
+- **Status:** Accepted and implemented (M1–M7, 2026-10-28).
 - **Mandated by brief?**
   - Amounts are stored as **integer paise** (p. 16).
   - Never lose or invent a paisa; ₹100 ÷ 3 = 33.34 + 33.33 + 33.33.
@@ -37,7 +37,7 @@
 
 ### Allocation rule — one function for Equal and Percent
 
-`allocate(totalPaise, weights: { memberId, weight }[], memberOrder) → Record<memberId, paise>` uses the **largest-remainder method**:
+`allocate(totalPaise, weights: { memberId, weight }[]) → Record<memberId, paise>` (weights passed in trip member order, which is what breaks ties) uses the **largest-remainder method**:
 
 1. `base_i = floor(total × w_i / W)` and `rem_i = (total × w_i) mod W`
 2. `leftover = total − Σ base_i`. This is always less than the number of participants.

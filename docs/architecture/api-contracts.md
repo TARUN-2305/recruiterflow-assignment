@@ -1,4 +1,4 @@
-# API Contracts — Recruiter Bot (proposal, Phase 0)
+# API Contracts — Recruiter Bot (as built, 2026-10-28)
 
 Base URL (local): `http://localhost:8000`. JSON only. FastAPI serves OpenAPI at `/docs` and `/openapi.json`. Only the two `matches` endpoints are required by the brief. `/health` is an engineering addition.
 
@@ -10,7 +10,7 @@ Returns every candidate, ranked for the job (ADR-003).
 |---|---|---|---|
 | `job_id` | path | integer | ≥ 1 |
 
-**200**, illustrative. The numbers are from the Phase 0 prototype for job 6 (Sales Engineer); the list is truncated.
+**200**, from the running API for job 6 (Sales Engineer), shortened. The full output is in `docs/testing/evidence/recruiter-bot-curl.txt`.
 
 ```json
 {
@@ -20,7 +20,8 @@ Returns every candidate, ranked for the job (ADR-003).
   "matches": [
     {
       "rank": 1,
-      "candidate": { "id": 15, "name": "Dwight S.", "years_experience": 9, "availability": "Immediate" },
+      "candidate": { "id": 15, "name": "Dwight S.", "years_experience": 9, "availability": "Immediate",
+                     "skills": ["sales", "negotiation", "security", "loyalty"], "traits": ["intense", "loyal"] },
       "score": 73.3,
       "reason": "Matches 2/3 required skills (sales, negotiation); missing public-speaking. 9 yrs experience (min 3). Available immediately. No culture keyword overlap (enthusiastic, persistent).",
       "breakdown": {
@@ -32,7 +33,7 @@ Returns every candidate, ranked for the job (ADR-003).
     },
     {
       "rank": 2,
-      "candidate": { "id": 11, "name": "Michael S.", "years_experience": 11, "availability": "Not looking" },
+      "candidate": { "id": 11, "name": "Michael S.", "years_experience": 11, "availability": "Not looking", "...": "..." },
       "score": 68.3,
       "reason": "Matches 2/3 required skills (sales, public-speaking); missing negotiation. 11 yrs experience (min 3). Not currently looking. Culture overlap: enthusiastic.",
       "breakdown": { "...": "..." }
@@ -45,7 +46,7 @@ A zero-overlap entry looks like `{ "rank": 15, "score": 0.0, "reason": "No requi
 
 ## `GET /candidates/{candidate_id}/matches`
 
-The same shape mirrored: `{ "candidate": {...}, "matches": [ { "rank", "job": { "id", "title", "min_experience" }, "score", "reason", "breakdown" } ] }`. For any given pair, the `score`, `reason` and `breakdown` are **identical** to what the job endpoint returns.
+The same shape mirrored: `{ "candidate": { id, name, years_experience, availability, skills, traits }, "matches": [ { "rank", "job": { id, title, min_experience, required_skills, culture_keywords }, "score", "reason", "breakdown" } ] }`. For any given pair, the `score`, `reason` and `breakdown` are **identical** to what the job endpoint returns.
 
 ## Errors
 

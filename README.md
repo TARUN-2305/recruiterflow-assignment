@@ -7,7 +7,7 @@ One repository, one folder per assignment section. Each folder runs on its own a
 | [`qa/`](qa/) | A — QA Automation | Playwright + TypeScript | Done: 5 required + 3 bonus tests and a Page Object, passing live |
 | [`backend/`](backend/) | B — Recruiter Bot + SQL Detective | Python · FastAPI · PostgreSQL · hand-written SQL | Done: both match endpoints, SQL Detective Q1–Q5, 63 tests |
 | [`frontend/`](frontend/) | C — Trip Splitter | React · Redux Toolkit · strict TypeScript · Vite | Done: both pages, all validation, localStorage, 132 tests |
-| [`docs/`](docs/) | Planning and design | Requirements traceability, architecture, ADRs, test strategy | Phase 0 complete |
+| [`docs/`](docs/) | Planning, design and evidence | Source audit, requirements traceability, architecture, ADRs, test evidence, [final acceptance report](docs/testing/results.md), [runbook](docs/handoff/runbook.md) | Complete |
 
 ## Prerequisites
 

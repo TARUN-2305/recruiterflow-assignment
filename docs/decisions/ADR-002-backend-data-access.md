@@ -1,6 +1,6 @@
 # ADR-002 — Database, data access and migrations for Recruiter Bot
 
-- **Status:** Proposed (Phase 0)
+- **Status:** Accepted and implemented (M1–M7, 2026-10-28).
 - **Mandated by brief?** "Any relational database … interact with it via **raw, hand-written SQL** — no ORMs or query-builder abstractions" (p. 11). "Hand-written DDL and hand-written queries, full stop" (p. 10). The choice of database and driver is ours.
 
 ## Decision

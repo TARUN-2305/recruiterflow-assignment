@@ -1,4 +1,25 @@
-# Implementation Plan (Phase 0 proposal — awaiting approval)
+# Implementation Plan
+
+## Status (2026-10-28)
+
+| Milestone | Status | Evidence |
+|---|---|---|
+| M1 Foundation | Done | Git, ignores, compose `db`, env templates |
+| M8 QA (moved up: 48-hour window) | Done | 5 required + 3 bonus tests pass live; `testing/evidence/qa-run.txt` |
+| M2 Recruiter Bot core | Done | 63 backend tests; `testing/evidence/recruiter-bot-curl.txt` |
+| M3 SQL Detective | Done | Q1–Q5 verified; `testing/evidence/sql-detective-results.txt` |
+| M4 Backend README | Done | Steps re-run from a clean clone on fresh databases |
+| M5 Trip Splitter domain | Done | Money/validation unit tests, mutation-checked |
+| M6 Trip Splitter UI | Done | 132 frontend tests; `testing/evidence/frontend-manual-checks.md` |
+| M7 Frontend README | Done | 499 words |
+| M9 Containers (optional) | Done | `testing/evidence/docker-compose-check.md` |
+| M10–M11 Docs and final review | Done | `testing/results.md` |
+
+The rest of this document is the original Phase 0 proposal, kept as the record of the plan. Where the build differed (React Router 8, `httpx2`, `127.0.0.1` URLs, QA order), the ADRs and `testing/results.md` record it.
+
+---
+
+## Original proposal (Phase 0)
 
 Related: `source-audit.md`, `requirements-traceability.md`, `architecture/`, `decisions/ADR-001…008`, `testing/test-strategy.md`.
 

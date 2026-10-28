@@ -1,4 +1,4 @@
-# Test Strategy (proposal, Phase 0)
+# Test Strategy (as built, 2026-10-28)
 
 Principle: test **behaviour at the boundaries the brief cares about**, meaning money correctness, scoring policy, SQL answers, and the five QA scenarios. Avoid tests that only mirror the implementation. Never weaken a test or a lint rule to get a pass.
 
@@ -33,7 +33,7 @@ DB test isolation: a session fixture drops and recreates the schema in `recruite
 
 | Layer | Examples |
 |---|---|
-| **Unit — money** | `parseRupeesToPaise`: `"1250.50"`→125050, `"0.01"`→1, `"1000000"`→100000000, `"1000000.01"` → max error, `"-5"` → exact text **"Amount must be more than ₹0"**, `"0"` → same, `"1.234"` → decimals error, `""` → required, `"abc"` → format; percent parsing including `"33.33"` → 3333 and `"100.01"` → error; `percentNumberToBasisPoints(33.33)` → 3333 |
+| **Unit — money** | `parseHundredths`: `"1250.50"`→125050, `"0.01"`→1, `"1000000"`→100000000, `"1000000.01"` → max error, `"-5"` → exact text **"Amount must be more than ₹0"**, `"0"` → same, `"1.234"` → decimals error, `""` → required, `"abc"` → format; percent parsing including `"33.33"` → 3333 and `"100.01"` → error; `percentToBasisPoints(33.33)` → 3333; every 0–10000 bp value round-trips |
 | **Unit — allocation** | **₹100 ÷ 3 → 3334 / 3333 / 3333 (m1 gets the extra)**; ₹0.02 ÷ 3; 1 paisa ÷ 5; percent e6 → 49995 / 49995 / 50009; key-order independence (e4); Σ shares = amount for every case |
 | **Unit — balances** | sample golden balances (+1855420, −369578, +55408, −811250, −730000); payer-not-in-split (e5); **Σ = 0 over sample and ~1,000 generated expenses** (seeded PRNG, all three split types); `describeBalance` wording, including "settled up" |
 | **Unit — format** | `formatINR`: 0 → ₹0.00; 1 → ₹0.01; 100000 → ₹1,000.00; 10000000 → ₹1,00,000.00; 4224999 → ₹42,249.99; 1234567890 → ₹1,23,45,678.90; cross-checked against `Intl.NumberFormat('en-IN')`; `describeSplit` → "Equally, 4 people", "Exact amounts, 3 people", "Percentages, 3 people", "…, 1 person" |

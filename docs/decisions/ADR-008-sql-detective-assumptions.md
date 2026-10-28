@@ -1,6 +1,6 @@
 # ADR-008 — SQL Detective: loading, identity and counting assumptions
 
-- **Status:** Proposed (Phase 0)
+- **Status:** Accepted and implemented (M1–M7, 2026-10-28).
 - **Mandated by brief?**
   - Load the dataset **as-is (don't redesign it)**.
   - Answer Q1–Q4, and Q5 (bonus, window function).

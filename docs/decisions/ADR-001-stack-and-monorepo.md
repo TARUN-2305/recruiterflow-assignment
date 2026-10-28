@@ -1,6 +1,6 @@
 # ADR-001 — Repository layout and technology stack
 
-- **Status:** Proposed (Phase 0)
+- **Status:** Accepted and implemented (M1–M7, 2026-10-28).
 - **Mandated by brief?** Partly. Section A requires Playwright + TS. Section C requires React + Redux Toolkit + strict TS + React Router. Section B lets us pick **any language and any relational DB**. The repo layout is our choice within p. 1's options.
 
 ## Context

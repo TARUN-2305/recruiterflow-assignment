@@ -1,4 +1,4 @@
-# High-Level Design (proposal, Phase 0)
+# High-Level Design (as built, 2026-10-28)
 
 > This is a small assignment-scale monorepo with **three independent applications**. It is **not a distributed system**: no microservices, message bus, cache or cloud infrastructure. Each package runs on its own, and they share nothing at runtime.
 
@@ -92,7 +92,7 @@ The reverse direction is symmetric.
    - selectors recompute balances.
 
 **4.4 Trip Splitter boot**
-1. `loadExpenses(localStorage)` → validated `Expense[]`, or `null`.
+1. `loadExpenses(localStorage, members)` → validated `Expense[]`, or `null`.
 2. If `null`, fall back to the validated sample.
 3. That becomes the store's preloaded state.
 

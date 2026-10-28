@@ -1,6 +1,6 @@
 # ADR-003 — Matching model, score formula and explainability
 
-- **Status:** Proposed (Phase 0). Weights are open to candidate review.
+- **Status:** Accepted and implemented (M1–M7, 2026-10-28).
 - **Mandated by brief?** The algorithm **must** account for (1) skill overlap with the job's required skills and (2) experience fit against the job's minimum (p. 11). Everything else — weights, traits/culture, availability, tie-breaking — is our choice, and we must be "ready to explain and defend" it.
 
 ## Decision
@@ -80,7 +80,7 @@ Reading these as a sanity check: Sherlock → Backend Detective and Olivia → I
 |---|---|
 | Jaccard similarity for skills (∩ ÷ ∪) | Penalises candidates for having extra skills the job doesn't need (MacGyver's chemistry would lower his Rapid Prototyping score). Coverage of the *job's* requirements is the recruiter's question. |
 | Hard filters (exclude Not looking, exclude below-min experience) | Hides candidates silently. Project instructions require penalties, not hidden exclusion. A score of 0 with a reason is more transparent. |
-| Return only pairs with score > 0 | Shorter output, but it is still a filter. We return the full ranking so both directions have a fixed size (15 / 6). **Open for candidate review:** a `min_score` query parameter is a small, documented extension if preferred. |
+| Return only pairs with score > 0 | Shorter output, but it is still a filter. We return the full ranking so both directions have a fixed size (15 / 6). **Decided by the candidate (Phase 0):** list every pair. A `min_score` query parameter remains a small possible extension. |
 | Multiplicative model (skill × experience × …) | Any zero kills the score, and partial contributions are harder to explain. The additive model plus a single explicit gate is easier to defend. |
 | Over-qualification penalty | No source data to calibrate it. Would be an invented judgement. |
 | Scoring in SQL | Possible, but it splits the policy across SQL and Python and makes boundary unit tests need a DB. SQL is used for retrieval (joins, `array_agg`); Python does the scoring. |
