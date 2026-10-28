@@ -151,16 +151,16 @@ Evaluation weights (p. 5), for prioritisation: coverage 30%, readability/naming 
 
 | ID | Recommendation | Location | Status |
 |---|---|---|---|
-| E-01 | Monorepo root README with quick-starts | `README.md` | Planned |
-| E-02 | `.gitignore`, `.gitattributes` (LF), `.editorconfig`, `.env.example` files; never commit `.env` or source PDF/MD | root + packages | Planned |
-| E-03 | Tiny handwritten-SQL migration runner with a `schema_migrations` table | `backend/scripts/migrate.py` | Planned |
-| E-04 | `GET /health` for container healthcheck | `backend/app/api/routes.py` | Planned |
-| E-05 | Docker Compose: PostgreSQL (+ optional API service); backend Dockerfile, non-root | `compose.yaml`, `backend/Dockerfile` | Planned |
-| E-06 | Ruff (lint + format) and mypy for backend | `backend/pyproject.toml` | Planned |
-| E-07 | ESLint `no-floating-promises` in `qa/` to enforce "every call awaited" | `qa/eslint.config.js` | Planned |
+| E-01 | Monorepo root README with quick-starts | `README.md` | Done (root README with all three quick starts) |
+| E-02 | `.gitignore`, `.gitattributes` (LF), `.editorconfig`, `.env.example` files; never commit `.env` or source PDF/MD | root + packages | Done |
+| E-03 | Tiny handwritten-SQL migration runner with a `schema_migrations` table | `backend/scripts/migrate.py` | Done (`backend/scripts/migrate.py`) |
+| E-04 | `GET /health` for container healthcheck | `backend/app/api/routes.py` | Done (`GET /health`, 503 when the DB is down) |
+| E-05 | Docker Compose: PostgreSQL (+ optional API service); backend Dockerfile, non-root | `compose.yaml`, `backend/Dockerfile` | Done (`compose.yaml` db + api, `backend/Dockerfile`, non-root; `docs/testing/evidence/docker-compose-check.md`) |
+| E-06 | Ruff (lint + format) and mypy for backend | `backend/pyproject.toml` | Done (ruff incl. S608, mypy strict) |
+| E-07 | ESLint `no-floating-promises` in `qa/` to enforce "every call awaited" | `qa/eslint.config.js` | Done |
 | E-08 | Architecture docs (HLD/LLD/ERD/API), ADRs, test strategy, interview guide | `docs/` | In progress |
-| E-09 | Generated-case invariant tests for money (seeded PRNG, no extra library) | `frontend/src/domain/*.test.ts` | Planned |
-| E-10 | Least-privilege DB role for the app | `compose` init script | Planned (optional; see ADR-006) |
+| E-09 | Generated-case invariant tests for money (seeded PRNG, no extra library) | `frontend/src/domain/*.test.ts` | Done (2,000 allocations, 500 trips, 1,000 formatter cases) |
+| E-10 | Least-privilege DB role for the app | `compose` init script | Not done (documented in ADR-006; dev DB is localhost-only) |
 
 ## OOS — Deliberately excluded
 

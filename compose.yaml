@@ -1,5 +1,7 @@
 # Optional local infrastructure for the Recruiter Bot (Section B).
-# Usage: copy .env.example to .env, then `docker compose up -d db`.
+# Copy .env.example to .env first, then either:
+#   docker compose up -d db          # just PostgreSQL; run the API on the host (backend/README.md)
+#   docker compose up -d --build     # PostgreSQL + the API container on http://127.0.0.1:8000
 services:
   db:
     image: postgres:16-alpine
@@ -19,6 +21,18 @@ services:
       interval: 5s
       timeout: 3s
       retries: 10
+
+  api:
+    build: ./backend
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      # Inside the compose network the database host is "db". The password must be URL-safe.
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/recruiter_bot
+      SQL_DETECTIVE_DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/hiring_ops
+    ports:
+      - "127.0.0.1:${API_PORT:-8000}:8000"
 
 volumes:
   pgdata:

@@ -49,12 +49,14 @@ cd qa && npm install && npx playwright install chromium && npx playwright test
 ## Compose workflow (optional)
 
 ```bash
-docker compose up -d --build           # db + api
+docker compose up -d --build --wait    # db + api, waits until both are healthy
 docker compose run --rm api python -m scripts.migrate
 docker compose run --rm api python -m scripts.seed
-curl -s localhost:8000/health
+curl -s http://127.0.0.1:8000/health
 docker compose down        # keep data   |   docker compose down -v   # reset (re-runs init script)
 ```
+
+Verified from an empty volume on 2026-10-28: `docs/testing/evidence/docker-compose-check.md`.
 
 ## Windows notes
 

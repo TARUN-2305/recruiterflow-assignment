@@ -1,6 +1,6 @@
 # ADR-006 — Containerisation (optional engineering)
 
-- **Status:** Proposed (Phase 0). To be built **after** host-based workflows pass (Phase 5).
+- **Status:** Implemented in M9 (2026-10-28), after all host workflows passed. See "Verified" at the end.
 - **Mandated by brief?** No. Section A says Docker is not needed for QA. Sections B and C don't mention it. This is purely our convenience choice.
 
 ## Decision
@@ -45,6 +45,28 @@ volumes: { pgdata: {} }
 
 The init script can also create a `recruiter_app` role that owns only `recruiter_bot`, so the API doesn't connect as the Postgres superuser. It is cheap to add and is listed as optional. If skipped, the README states that the local dev credentials are superuser and must not be reused elsewhere.
 
+## As built (differences from the sketch above)
+
+- Base image `python:3.13-slim`, matching the dev Python version. It is pinned by tag, not digest, so rebuilds pick up Debian security patches.
+- `.dockerignore` keeps `.env`, `.venv`, tests, caches and dev requirements out of the image. The image is 229 MB.
+- The API port is bound to `127.0.0.1` only, like the database's, and can be changed with `API_PORT`.
+- `/health` checks database reachability (`SELECT 1`), not migration state. That is the right signal for "is the container working"; the migration state is explicit through `scripts.migrate`.
+- **Not done:** the least-privilege DB role (E-10). The local dev user is the container's superuser. That is acceptable for a localhost-bound dev database, and the README says so. A real deployment would add an app role with only `SELECT` on the bot tables.
+
+## Verified (2026-10-28)
+
+On a fresh, isolated Compose project (`-p rf-verify`, its own empty volume, ports 5440/8010):
+- `up --build --wait` → both containers healthy
+- migrate applied once, then "No pending"
+- seed ×2 → 15/6
+- SQL Detective loaded 5/7/11/24
+- `/health` 200; `/jobs/1/matches` → Sherlock H. 95.0; unknown id → 404
+- the container runs as `uid=10001(app)`, and no credentials are in the image's environment
+- with the database stopped, `/health` → 503 `unavailable`, `/jobs/1/matches` → generic 500, and the password does not appear in the API logs
+- `down -v` removed everything
+
+The host workflow is unchanged: `docker compose up -d db` starts only PostgreSQL, and the 63 backend tests still pass. Evidence: `docs/testing/evidence/docker-compose-check.md`.
+
 ## Environment note
 
-Docker Desktop is installed on the dev machine (Compose v5.1.3), but the daemon was **not running** during Phase 0. It must be started before Phase 2's integration tests.
+Docker Desktop is installed on the dev machine (Compose v5.1.3). The daemon was not running during Phase 0 and was started by the candidate before M1.

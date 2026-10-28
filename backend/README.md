@@ -26,6 +26,22 @@ uvicorn app.main:app --reload        # http://127.0.0.1:8000, interactive docs a
 
 On Windows, use `127.0.0.1` rather than `localhost` in `DATABASE_URL`. `localhost` tries IPv6 first and the connection stalls for several seconds.
 
+### Or run everything in Docker (optional)
+
+```bash
+# from the repository root, with .env created from .env.example
+docker compose up -d --build --wait                     # PostgreSQL + API (http://127.0.0.1:8000)
+docker compose run --rm api python -m scripts.migrate
+docker compose run --rm api python -m scripts.seed
+docker compose run --rm api python -m scripts.load_sql_detective
+docker compose down                                     # add -v to delete the database volume
+```
+
+- The API image (`backend/Dockerfile`) contains only runtime dependencies and runs as a non-root user.
+- Credentials are supplied at run time from `.env`, never baked into the image. The password must be URL-safe because it goes into a connection URL.
+- `/health` reports whether the database is reachable (503 if not). It does not check that the migrations have been run.
+- Don't run the host `uvicorn` at the same time unless you change `API_PORT` in `.env`; both use port 8000.
+
 ## Try the API
 
 ```bash
