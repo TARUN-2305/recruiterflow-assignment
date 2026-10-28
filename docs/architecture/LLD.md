@@ -25,7 +25,8 @@ app/
 │   ├── candidates.py  # get_candidate_profile(conn, id), list_candidate_profiles(conn)
 │   └── jobs.py        # get_job_profile(conn, id), list_job_profiles(conn)
 └── db/
-    └── connection.py  # get_connection() FastAPI dependency (yield psycopg.Connection)
+    └── connection.py  # connect(url); get_database_url() and get_connection() FastAPI dependencies.
+                       # Tests override get_database_url only; routes and /health then use the test DB.
 migrations/001_recruiter_bot_schema.sql
 scripts/migrate.py · scripts/seed.py · scripts/load_sql_detective.py
 seed/recruiter_bot_seed.json

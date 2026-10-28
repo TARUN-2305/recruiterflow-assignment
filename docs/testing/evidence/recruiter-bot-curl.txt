@@ -1,0 +1,148 @@
+# Recruiter Bot — live curl evidence (2026-10-28T14:53Z); DB seeded via scripts.seed
+
+$ curl -s http://127.0.0.1:8000/health
+{"status":"ok"}
+
+$ curl -s http://127.0.0.1:8000/jobs/6/matches   (first 2 of 15 matches shown)
+{
+  "job": {
+    "id": 6,
+    "title": "Sales Engineer",
+    "min_experience": 3,
+    "required_skills": [
+      "sales",
+      "public-speaking",
+      "negotiation"
+    ],
+    "culture_keywords": [
+      "enthusiastic",
+      "persistent"
+    ]
+  },
+  "matches": [
+    {
+      "rank": 1,
+      "candidate": {
+        "id": 15,
+        "name": "Dwight S.",
+        "years_experience": 9,
+        "availability": "Immediate",
+        "skills": [
+          "sales",
+          "negotiation",
+          "security",
+          "loyalty"
+        ],
+        "traits": [
+          "intense",
+          "loyal"
+        ]
+      },
+      "score": 73.3,
+      "reason": "Matches 2/3 required skills (sales, negotiation); missing public-speaking. 9 yrs experience (min 3). Available immediately. No culture keyword overlap (enthusiastic, persistent).",
+      "breakdown": {
+        "skills": {
+          "points": 33.3,
+          "max": 50,
+          "matched": [
+            "sales",
+            "negotiation"
+          ],
+          "missing": [
+            "public-speaking"
+          ]
+        },
+        "experience": {
+          "points": 30.0,
+          "max": 30,
+          "years": 9,
+          "required": 3
+        },
+        "culture": {
+          "points": 0.0,
+          "max": 10,
+          "matched": []
+        },
+        "availability": {
+          "points": 10.0,
+          "max": 10,
+          "value": "Immediate"
+        }
+      }
+    },
+    {
+      "rank": 2,
+      "candidate": {
+        "id": 11,
+        "name": "Michael S.",
+        "years_experience": 11,
+        "availability": "Not looking",
+        "skills": [
+          "sales",
+          "public-speaking",
+          "team-building"
+        ],
+        "traits": [
+          "enthusiastic",
+          "chaotic"
+        ]
+      },
+      "score": 68.3,
+      "reason": "Matches 2/3 required skills (sales, public-speaking); missing negotiation. 11 yrs experience (min 3). Not currently looking. Culture overlap: enthusiastic.",
+      "breakdown": {
+        "skills": {
+          "points": 33.3,
+          "max": 50,
+          "matched": [
+            "sales",
+            "public-speaking"
+          ],
+          "missing": [
+            "negotiation"
+          ]
+        },
+        "experience": {
+          "points": 30.0,
+          "max": 30,
+          "years": 11,
+          "required": 3
+        },
+        "culture": {
+          "points": 5.0,
+          "max": 10,
+          "matched": [
+            "enthusiastic"
+          ]
+        },
+        "availability": {
+          "points": 0.0,
+          "max": 10,
+          "value": "Not looking"
+        }
+      }
+    }
+  ]
+}
+
+$ curl -s http://127.0.0.1:8000/candidates/11/matches   (rank, job, score, reason)
+1 Sales Engineer 68.3 | Matches 2/3 required skills (sales, public-speaking); missing negotiation. 11 yrs experience (min 3). Not currently looking. Culture overlap: enthusiastic.
+2 Developer Relations Lead 55.0 | Matches 1/2 required skills (public-speaking); missing research. 11 yrs experience (min 2). Not currently looking. No culture keyword overlap (energetic, curious).
+3 Engineering Manager, Chaos Team 46.7 | Matches 1/3 required skills (team-building); missing stakeholder-management, leadership. 11 yrs experience (min 5). Not currently looking. No culture keyword overlap (empathetic, organized).
+4 Backend Detective 0.0 | No required skills matched (0/3).
+5 Incident Commander 0.0 | No required skills matched (0/3).
+6 Rapid Prototyping Engineer 0.0 | No required skills matched (0/2).
+
+# Ranking summary for every job (score > 0 shown; remaining candidates score 0.0)
+Backend Detective | Sherlock H. 95.0 , Sheldon C. 56.7
+Rapid Prototyping Engineer | Rick S. 90.0 , MacGyver 85.0 , Tony S. 85.0
+Developer Relations Lead | Elle W. 90.0 , Hermione G. 85.0 , Leslie K. 65.0 , Sheldon C. 65.0 , Ted L. 65.0 , Michael S. 55.0
+Engineering Manager, Chaos Team | Miranda P. 63.3 , Leslie K. 61.7 , Ted L. 61.7 , Olivia P. 51.7 , Michael S. 46.7 , Tony S. 46.7
+Incident Commander | Olivia P. 90.0 , Katniss E. 78.3 , Dwight S. 56.7 , Miranda P. 51.7 , Ron S. 46.7
+Sales Engineer | Dwight S. 73.3 , Michael S. 68.3 , Ted L. 61.7 , Elle W. 56.7 , Leslie K. 56.7 , Hermione G. 51.7 , Olivia P. 51.7 , Miranda P. 46.7 , Ron S. 46.7
+
+$ curl -i http://127.0.0.1:8000/jobs/999/matches
+HTTP/1.1 404 Not Found
+{"detail":"Job 999 not found"}
+
+$ curl -i http://127.0.0.1:8000/candidates/abc/matches
+HTTP 422

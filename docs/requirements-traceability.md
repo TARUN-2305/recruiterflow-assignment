@@ -60,26 +60,26 @@ Evaluation weights (p. 5), for prioritisation: coverage 30%, readability/naming 
 
 | ID | Page | Requirement | Class | Location | Evidence | Status |
 |---|---|---|---|---|---|---|
-| B-ING-01 | 10 | Ingestion of candidates and jobs (endpoint or seed script) | MUST | `backend/scripts/seed.py`, `backend/seed/recruiter_bot_seed.json` | Integration test | Planned |
-| B-ING-02 | 7–10 | All **15 candidates** and **6 jobs**, field values exactly as source | MUST | Seed JSON | Seed-fidelity unit test (golden values) + row counts | Planned |
-| B-ING-03 | — | Seeding repeatable without duplicates | OPT-ENG (CLAUDE.md) | `seed.py` (upserts in one transaction) | Run twice → identical counts | Planned |
-| B-SCH-01 | 10 | Own schema for candidates, jobs, and a "match" representation | MUST | `backend/migrations/001_recruiter_bot_schema.sql` | Migration test | Planned |
-| B-SQL-01 | 10–11 | **Raw, hand-written SQL only** — no ORM, query builder or SQL generator; hand-written DDL and queries | MUST | `backend/app/repositories/*.py`, `backend/migrations/*.sql` | Dependency review (`psycopg` only); code review | Planned |
-| B-DB-01 | 11 | Any relational DB | MUST | PostgreSQL (ADR-002) | — | Planned |
-| B-LANG-01 | 11 | Any programming language | MUST (free choice) | Python (ADR-001) | — | Planned |
-| B-API-01 | 10 | `GET /jobs/{id}/matches`: ranked candidates, each with a **score** and **short reason** | MUST | `backend/app/api/routes.py` | API integration test + curl evidence | Planned |
-| B-API-02 | 10 | `GET /candidates/{id}/matches`: ranked jobs (reverse direction) | MUST | `backend/app/api/routes.py` | API integration test + curl evidence | Planned |
-| B-API-03 | — | 404 for unknown id; 422 for malformed id; no stack traces | OPT-ENG | `backend/app/api/errors.py` | Integration tests | Planned |
-| B-ALG-01 | 11 | Algorithm **must** account for skill overlap with job's required skills | MUST | `backend/app/domain/matching.py` | Unit tests | Planned |
-| B-ALG-02 | 11 | Algorithm **must** account for experience vs job minimum | MUST | `backend/app/domain/matching.py` | Unit tests (below/at/above min) | Planned |
-| B-ALG-03 | 11 | Weights, traits, culture keywords, availability, tie-breaking: candidate's choice; must explain and defend | MUST (explain) | ADR-003, `backend/README.md` | Review | Planned |
-| B-ALG-04 | — | Both directions use one scoring function; deterministic order | OPT-ENG | `matching.py` | Consistency test over all 90 pairs | Planned |
-| B-DOC-01 | 11 | README with curl examples (or Postman) proving the API works | MUST | `backend/README.md` | Commands executed; output captured in `docs/testing/evidence/` | Planned |
+| B-ING-01 | 10 | Ingestion of candidates and jobs (endpoint or seed script) | MUST | `backend/scripts/seed.py`, `backend/seed/recruiter_bot_seed.json` | Integration test | Done (`python -m scripts.seed`; integration tests) |
+| B-ING-02 | 7–10 | All **15 candidates** and **6 jobs**, field values exactly as source | MUST | Seed JSON | Seed-fidelity unit test (golden values) + row counts | Done (15/6; `tests/unit/test_seed_data.py` spot checks + counts) |
+| B-ING-03 | — | Seeding repeatable without duplicates | OPT-ENG (CLAUDE.md) | `seed.py` (upserts in one transaction) | Run twice → identical counts | Done (seed run twice: identical counts and rows; rollback test) |
+| B-SCH-01 | 10 | Own schema for candidates, jobs, and a "match" representation | MUST | `backend/migrations/001_recruiter_bot_schema.sql` | Migration test | Done (`migrations/001_recruiter_bot_schema.sql`; match computed on read) |
+| B-SQL-01 | 10–11 | **Raw, hand-written SQL only** — no ORM, query builder or SQL generator; hand-written DDL and queries | MUST | `backend/app/repositories/*.py`, `backend/migrations/*.sql` | Dependency review (`psycopg` only); code review | Done (psycopg only; ruff S608 enabled; all SQL literal with %s params) |
+| B-DB-01 | 11 | Any relational DB | MUST | PostgreSQL (ADR-002) | — | Done (PostgreSQL 16.14) |
+| B-LANG-01 | 11 | Any programming language | MUST (free choice) | Python (ADR-001) | — | Done (Python 3.13 / FastAPI) |
+| B-API-01 | 10 | `GET /jobs/{id}/matches`: ranked candidates, each with a **score** and **short reason** | MUST | `backend/app/api/routes.py` | API integration test + curl evidence | Done (`tests/integration/test_api.py`; `docs/testing/evidence/recruiter-bot-curl.txt`) |
+| B-API-02 | 10 | `GET /candidates/{id}/matches`: ranked jobs (reverse direction) | MUST | `backend/app/api/routes.py` | API integration test + curl evidence | Done (`tests/integration/test_api.py`; curl evidence) |
+| B-API-03 | — | 404 for unknown id; 422 for malformed id; no stack traces | OPT-ENG | `backend/app/api/errors.py` | Integration tests | Done (404/422/500 tests) |
+| B-ALG-01 | 11 | Algorithm **must** account for skill overlap with job's required skills | MUST | `backend/app/domain/matching.py` | Unit tests | Done (unit tests) |
+| B-ALG-02 | 11 | Algorithm **must** account for experience vs job minimum | MUST | `backend/app/domain/matching.py` | Unit tests (below/at/above min) | Done (unit tests: below/at/above/min 0) |
+| B-ALG-03 | 11 | Weights, traits, culture keywords, availability, tie-breaking: candidate's choice; must explain and defend | MUST (explain) | ADR-003, `backend/README.md` | Review | Implemented per ADR-003; README write-up pending (M4) |
+| B-ALG-04 | — | Both directions use one scoring function; deterministic order | OPT-ENG | `matching.py` | Consistency test over all 90 pairs | Done (90-pair consistency test) |
+| B-DOC-01 | 11 | README with curl examples (or Postman) proving the API works | MUST | `backend/README.md` | Commands executed; output captured in `docs/testing/evidence/` | In progress (curl evidence captured; README in M4) |
 | B-DOC-02 | 13 | README: install and run locally | MUST | `backend/README.md` | Clean-setup run | Planned |
 | B-DOC-03 | 13 | README: few-paragraph decisions and trade-offs, especially matching | MUST | `backend/README.md` | Review | Planned |
 | B-DOC-04 | 13 | README: where AI tools were used | MUST | `backend/README.md` | Review | Planned |
-| B-BON-01 | 11 | Tests (nice bonus) | BONUS (our gate: required) | `backend/tests/` | `pytest` | Planned |
-| B-BON-02 | 11 | API docs (nice bonus) | BONUS | FastAPI OpenAPI at `/docs` + `docs/architecture/api-contracts.md` | Manual check | Planned |
+| B-BON-01 | 11 | Tests (nice bonus) | BONUS (our gate: required) | `backend/tests/` | `pytest` | Done (55 tests: 34 unit, 21 integration) |
+| B-BON-02 | 11 | API docs (nice bonus) | BONUS | FastAPI OpenAPI at `/docs` + `docs/architecture/api-contracts.md` | Manual check | In progress (FastAPI OpenAPI generated; manual check in M4) |
 | B-OOS-01 | 11 | Frontend for the bot | OOS | — | — | n/a |
 | B-SQLD-01 | 11–13 | Load the 4 supplied tables **as-is** (no redesign), with supplied rows | MUST | `backend/sql_detective/schema.sql`, `backend/sql_detective/seed.sql` (verbatim) | Row-count test (5/7/11/24); diff vs source | Planned |
 | B-SQLD-02 | 13 | Q1: open postings + owning recruiter name | MUST | `backend/sql_detective/sql_detective.sql` | Result test vs expected set | Planned |
